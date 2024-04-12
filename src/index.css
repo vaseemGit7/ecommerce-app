@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+  display: grid;
+  place-content: center;
+  background: linear-gradient(
+    231deg,
+    #f4ddff -3.91%,
+    #cdd5ef 39.6%,
+    #ffdcdc 67.65%,
+    #bdeee5 106%
+  );
+}
