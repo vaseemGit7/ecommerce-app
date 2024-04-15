@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { credentialsDb } from "../database/credentials";
 
 const LoginPage = () => {
@@ -6,21 +6,62 @@ const LoginPage = () => {
   const passwordInput = useRef(null);
   const loginForm = useRef(null);
 
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const checkEmailValidity = () => {
+    const emailValue = emailIdInput.current.value.trim();
+    const isEmailValid =
+      /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/.test(
+        emailValue
+      );
+
+    if (emailValue !== "") {
+      if (!isEmailValid) {
+        setEmailError("*Please enter valid email.");
+      } else {
+        setEmailError("");
+      }
+    } else {
+      setEmailError("*Please fill in this field ");
+    }
+
+    return isEmailValid;
+  };
+
+  const checkPasswordValidity = () => {
+    const passwordValue = passwordInput.current.value.trim();
+    const isPasswordValid = passwordValue.length > 0;
+
+    if (!isPasswordValid) {
+      setPasswordError("*Please fill in this field");
+    } else {
+      setPasswordError("");
+    }
+
+    return isPasswordValid;
+  };
+
   const checkValidUser = (e) => {
     e.preventDefault();
     let validUser = false;
 
-    credentialsDb.forEach((user) => {
-      if (
-        user.emailId === emailIdInput.current.value &&
-        user.password === passwordInput.current.value
-      ) {
-        validUser = true;
-        return;
-      }
-    });
-    validUser ? console.log("Login success") : console.log("Login failed");
-    loginForm.current.reset();
+    checkEmailValidity();
+    checkPasswordValidity();
+
+    if (checkEmailValidity() && checkPasswordValidity()) {
+      credentialsDb.forEach((user) => {
+        if (
+          user.emailId === emailIdInput.current.value &&
+          user.password === passwordInput.current.value
+        ) {
+          validUser = true;
+          return;
+        }
+      });
+      validUser ? console.log("Login success") : console.log("Login failed");
+      loginForm.current.reset();
+    }
   };
 
   return (
@@ -36,25 +77,47 @@ const LoginPage = () => {
           onSubmit={(e) => checkValidUser(e)}
           id="loginForm"
         >
-          <div className="flex flex-col gap-1">
+          <div className="relative flex flex-col gap-1">
             <label className="text-xs font-semibold text-neutral-600">
               EMAIL
             </label>
             <input
-              className="w-96 px-2 py-2 text-base bg-gray-100/75 rounded-md drop-shadow"
+              className="w-96 px-2 py-2 text-base bg-gray-100/75 rounded-md drop-shadow focus:outline focus:outline-neutral-500"
               ref={emailIdInput}
               type="email"
+              onBlur={() => {
+                checkEmailValidity();
+              }}
+              onFocus={() => {
+                setEmailError("");
+              }}
             ></input>
+            {emailError && (
+              <p className="absolute -bottom-5 text-sm font-medium text-red-600">
+                {emailError}
+              </p>
+            )}
           </div>
-          <div className="flex flex-col gap-1">
+          <div className="relative flex flex-col gap-1">
             <label className="text-xs font-semibold text-neutral-600">
               PASSWORD
             </label>
             <input
-              className="w-96 px-2 py-2 text-base bg-gray-100/75 rounded-md drop-shadow"
+              className="w-96 px-2 py-2 text-base bg-gray-100/75 rounded-md drop-shadow focus:outline focus:outline-neutral-500"
               ref={passwordInput}
               type="password"
+              onBlur={() => {
+                checkPasswordValidity();
+              }}
+              onFocus={() => {
+                setPasswordError("");
+              }}
             ></input>
+            {passwordError && (
+              <p className="absolute -bottom-5 text-sm font-medium text-red-600">
+                {passwordError}
+              </p>
+            )}
           </div>
           <button
             className="w-32 px-8 py-2 text-md font-semibold  text-neutral-50 bg-violet-900 drop-shadow-md rounded-md hover:bg-violet-950"
