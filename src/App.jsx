@@ -1,9 +1,12 @@
-import LoginPage from "./components/LoginPage";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import routes from "./routes/routes";
 
 const App = () => {
+  const route = createBrowserRouter(routes);
+
   return (
     <>
-      <LoginPage />
+      <RouterProvider router={route}></RouterProvider>
     </>
   );
 };
