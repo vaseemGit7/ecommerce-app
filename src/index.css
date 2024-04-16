@@ -14,8 +14,6 @@ body {
 
 #root {
   height: 100%;
-  display: grid;
-  place-content: center;
   background: linear-gradient(
     231deg,
     #f4ddff -3.91%,
