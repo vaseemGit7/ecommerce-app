@@ -1,8 +1,6 @@
-import { lazy, Suspense } from "react";
+import { lazy } from "react";
 import LoginPage from "../components/LoginPage";
-import Loading from "../components/Loading";
 const LazyDashBoard = lazy(() => delayRoute(import("../components/Dashboard")));
-
 const routes = [
   {
     path: "/",
@@ -12,11 +10,7 @@ const routes = [
   {
     path: "/dashboard",
     name: "Dashboard",
-    element: (
-      <Suspense fallback={<Loading />}>
-        <LazyDashBoard />
-      </Suspense>
-    ),
+    element: <LazyDashBoard />,
   },
 ];
 
