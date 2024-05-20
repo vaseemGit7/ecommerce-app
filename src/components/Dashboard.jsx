@@ -22,7 +22,7 @@ const Dashboard = () => {
         isSidebarExpanded={isSidebarExpanded}
         setSidebarExpand={setSidebarExpand}
       />
-      <div className="grid place-items-center px-2 py-3">
+      <div className="px-2 py-3">
         <Outlet />
       </div>
     </div>
