@@ -1,4 +1,5 @@
 import { pesudoProductData } from "../database/pesudoProductData";
+import ProductCard from "./ProductCard";
 
 const Home = () => {
   return (
@@ -6,17 +7,12 @@ const Home = () => {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-          gap: "10px",
+          gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+          gap: "30px",
         }}
       >
         {pesudoProductData.map((product) => (
-          <div
-            className="p-2 bg-slate-50 text-neutral-900 rounded"
-            key={product.id}
-          >
-            {product.product_name}
-          </div>
+          <ProductCard key={product.id} product={product} />
         ))}
       </div>
     </>
