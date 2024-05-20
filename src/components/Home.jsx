@@ -1,10 +1,23 @@
-import DoughnutChart from "./DoughnutChart";
+import { pesudoProductData } from "../database/pesudoProductData";
 
 const Home = () => {
   return (
     <>
-      <div className=" h-96 w-96 bg-neutral-50 rounded-lg drop-shadow-md">
-        <DoughnutChart />
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+          gap: "10px",
+        }}
+      >
+        {pesudoProductData.map((product) => (
+          <div
+            className="p-2 bg-slate-50 text-neutral-900 rounded"
+            key={product.id}
+          >
+            {product.product_name}
+          </div>
+        ))}
       </div>
     </>
   );
