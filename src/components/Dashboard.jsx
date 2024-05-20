@@ -1,6 +1,6 @@
 import { useState } from "react";
-import DoughnutChart from "./DoughnutChart";
 import Sidebar from "./Sidebar";
+import { Outlet } from "react-router-dom";
 
 const Dashboard = () => {
   const [isSidebarExpanded, setSidebarExpand] = useState(false);
@@ -23,9 +23,7 @@ const Dashboard = () => {
         setSidebarExpand={setSidebarExpand}
       />
       <div className="grid place-items-center px-2 py-3">
-        <div className=" h-96 w-96 bg-neutral-50 rounded-lg drop-shadow-md">
-          <DoughnutChart />
-        </div>
+        <Outlet />
       </div>
     </div>
   );

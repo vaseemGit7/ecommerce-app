@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 const Sidebar = ({ isSidebarExpanded, setSidebarExpand }) => {
   return (
     <div
@@ -12,30 +14,48 @@ const Sidebar = ({ isSidebarExpanded, setSidebarExpand }) => {
             <p>Dashboard</p>
           </div>
           <div className="flex flex-col gap-4">
-            <div className="flex gap-3 px-2 py-1 rounded-md hover:bg-neutral-500 cursor-pointer">
+            <NavLink
+              to="/dashboard/home"
+              className="flex gap-3 px-2 py-1 rounded-md hover:bg-neutral-500 cursor-pointer"
+            >
               <p>H</p>
               <p>Home</p>
-            </div>
-            <div className="flex gap-3 px-2 py-1 rounded-md hover:bg-neutral-500 cursor-pointer">
+            </NavLink>
+            <NavLink
+              to=""
+              className="flex gap-3 px-2 py-1 rounded-md hover:bg-neutral-500 cursor-pointer"
+            >
               <p>P</p>
               <p>Profile</p>
-            </div>
-            <div className="flex gap-3 px-2 py-1 rounded-md hover:bg-neutral-500 cursor-pointer">
+            </NavLink>
+            <NavLink
+              to=""
+              className="flex gap-3 px-2 py-1 rounded-md hover:bg-neutral-500 cursor-pointer"
+            >
               <p>M</p>
               <p>Messages</p>
-            </div>
-            <div className="flex gap-3 px-2 py-1 rounded-md hover:bg-neutral-500 cursor-pointer">
+            </NavLink>
+            <NavLink
+              to=""
+              className="flex gap-3 px-2 py-1 rounded-md hover:bg-neutral-500 cursor-pointer"
+            >
               <p>H</p>
               <p>History</p>
-            </div>
-            <div className="flex gap-3 px-2 py-1 rounded-md hover:bg-neutral-500 cursor-pointer">
+            </NavLink>
+            <NavLink
+              to=""
+              className="flex gap-3 px-2 py-1 rounded-md hover:bg-neutral-500 cursor-pointer"
+            >
               <p>T</p>
               <p>Tasks</p>
-            </div>
-            <div className="flex gap-3 px-2 py-1 rounded-md hover:bg-neutral-500 cursor-pointer">
+            </NavLink>
+            <NavLink
+              to=""
+              className="flex gap-3 px-2 py-1 rounded-md hover:bg-neutral-500 cursor-pointer"
+            >
               <p>C</p>
               <p>Communities</p>
-            </div>
+            </NavLink>
           </div>
         </>
       ) : (

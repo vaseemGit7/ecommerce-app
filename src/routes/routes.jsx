@@ -12,7 +12,7 @@ const routes = [
     path: "/dashboard",
     name: "Dashboard",
     element: <LazyDashBoard />,
-    children: [{ path: "/home", name: "Home", element: <Home />, index: true }],
+    children: [{ path: "home", name: "Home", element: <Home />, index: true }],
   },
 ];
 
