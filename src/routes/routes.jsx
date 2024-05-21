@@ -2,6 +2,8 @@ import { lazy } from "react";
 import LoginPage from "../components/LoginPage";
 const LazyDashBoard = lazy(() => delayRoute(import("../components/Dashboard")));
 import Home from "../components/Home";
+import Profile from "../components/Profile";
+
 const routes = [
   {
     path: "/",
@@ -12,7 +14,10 @@ const routes = [
     path: "/dashboard",
     name: "Dashboard",
     element: <LazyDashBoard />,
-    children: [{ path: "home", name: "Home", element: <Home />, index: true }],
+    children: [
+      { path: "home", name: "Home", element: <Home />, index: true },
+      { path: "profile", name: "Profile", element: <Profile /> },
+    ],
   },
 ];
 

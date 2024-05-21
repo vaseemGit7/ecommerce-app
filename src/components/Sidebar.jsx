@@ -22,7 +22,7 @@ const Sidebar = ({ isSidebarExpanded, setSidebarExpand }) => {
               <p>Home</p>
             </NavLink>
             <NavLink
-              to=""
+              to="/dashboard/profile"
               className="flex gap-3 px-2 py-1 rounded-md hover:bg-neutral-500 cursor-pointer"
             >
               <p>P</p>
