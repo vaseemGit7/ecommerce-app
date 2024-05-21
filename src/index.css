@@ -12,13 +12,10 @@ body {
   height: 100%;
 }
 
+body {
+  background-color: #d4d4d4;
+}
+
 #root {
   height: 100%;
-  background: linear-gradient(
-    231deg,
-    #f4ddff -3.91%,
-    #cdd5ef 39.6%,
-    #ffdcdc 67.65%,
-    #bdeee5 106%
-  );
 }
