@@ -1,11 +1,14 @@
 import { useRef, useState } from "react";
 import { credentialsDb } from "../database/credentials";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser } from "../actions/userActions";
 const LoginPage = () => {
   const emailIdInput = useRef(null);
   const passwordInput = useRef(null);
   const loginForm = useRef(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -57,6 +60,7 @@ const LoginPage = () => {
           user.password === passwordInput.current.value
         ) {
           validUser = true;
+          dispatch(setUser(user.id));
           navigate("/dashboard");
           return;
         }
