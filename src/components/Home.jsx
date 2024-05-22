@@ -1,8 +1,8 @@
 import ProductCard from "./ProductCard";
-import Loading from "./Loading";
 import { getAll } from "../api/API";
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import ProductLoading from "./ProductLoading";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -41,7 +41,7 @@ const Home = () => {
       dataLength={products.length}
       next={fetchMoreData}
       hasMore={hasMore}
-      loader={<Loading />}
+      loader={<ProductLoading />}
     >
       <div
         style={{
