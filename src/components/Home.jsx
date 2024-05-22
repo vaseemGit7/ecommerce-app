@@ -7,11 +7,11 @@ import ProductLoading from "./ProductLoading";
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [hasMore, setHasMore] = useState(true);
-  const [index, setIndex] = useState(2);
+  const [index, setIndex] = useState(12);
 
   const getProducts = async () => {
     try {
-      const data = await getAll(10);
+      const data = await getAll(0);
       setProducts(data);
     } catch (error) {
       console.log(error);
@@ -31,10 +31,10 @@ const Home = () => {
       console.log(error);
     }
 
-    setIndex((prevIndex) => prevIndex + 1);
+    setIndex((prevIndex) => prevIndex + 12);
   };
 
-  console.log(products && products[0]);
+  console.log(products);
 
   return (
     <InfiniteScroll
