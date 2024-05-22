@@ -1,13 +1,17 @@
 import ProductCard from "./ProductCard";
+import Loading from "./Loading";
 import { getAll } from "../api/API";
 import { useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const Home = () => {
-  const [products, setProducts] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [index, setIndex] = useState(2);
 
   const getProducts = async () => {
     try {
-      const data = await getAll();
+      const data = await getAll(10);
       setProducts(data);
     } catch (error) {
       console.log(error);
@@ -18,10 +22,27 @@ const Home = () => {
     getProducts();
   }, []);
 
+  const fetchMoreData = async () => {
+    try {
+      const data = await getAll(index);
+      setProducts((prevItems) => [...prevItems, ...data]);
+      data.length > 0 ? setHasMore(true) : setHasMore(false);
+    } catch (error) {
+      console.log(error);
+    }
+
+    setIndex((prevIndex) => prevIndex + 1);
+  };
+
   console.log(products && products[0]);
 
   return (
-    <>
+    <InfiniteScroll
+      dataLength={products.length}
+      next={fetchMoreData}
+      hasMore={hasMore}
+      loader={<Loading />}
+    >
       <div
         style={{
           display: "grid",
@@ -34,7 +55,7 @@ const Home = () => {
             <ProductCard key={product.id} product={product} />
           ))}
       </div>
-    </>
+    </InfiniteScroll>
   );
 };
 

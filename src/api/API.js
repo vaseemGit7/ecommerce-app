@@ -4,8 +4,8 @@ const Axios = axios.create({
   baseURL: "https://api.escuelajs.co/api/v1/",
 });
 
-export const getAll = () => {
-  return Axios.get("/products")
+export const getAll = (offesetVal) => {
+  return Axios.get(`/products?offset=${offesetVal}&limit=12`)
     .then((res) => {
       return res.data;
     })
