@@ -22,9 +22,18 @@ const ProductDetail = () => {
   console.log(product);
 
   return (
-    <>
-      <p>This is a product detail page of the product with id {id}</p>
-    </>
+    <div className="grid grid-cols-2 bg p-2 bg-slate-50 text-neutral-900 rounded">
+      {product && (
+        <>
+          <img src={product.images[1]} />
+          <div className="flex flex-col gap-2">
+            <p className="text-xl font-semibold">{product.title}</p>
+            <p className="text-lg font-medium">$ {product.price}</p>
+            <p className="text-base font-normal">{product.description}</p>
+          </div>
+        </>
+      )}
+    </div>
   );
 };
 
