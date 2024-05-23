@@ -11,3 +11,11 @@ export const getAll = (offesetVal) => {
     })
     .catch((err) => console.log(err));
 };
+
+export const getProduct = (id) => {
+  return Axios.get(`/products/${id}`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => console.log(err));
+};
