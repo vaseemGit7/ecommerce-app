@@ -1,5 +1,5 @@
 import ProductCard from "./ProductCard";
-import { getAll } from "../api/API";
+import { getHMProducts } from "../api/API";
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ProductLoading from "./ProductLoading";
@@ -7,31 +7,40 @@ import ProductLoading from "./ProductLoading";
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [hasMore, setHasMore] = useState(true);
-  const [index, setIndex] = useState(12);
+  const [index, setIndex] = useState(1);
 
-  const getProducts = async () => {
+  // const getProducts = async () => {
+  //   try {
+  //     const data = await getAll(0);
+  //     setProducts(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const getProductsHM = async () => {
     try {
-      const data = await getAll(0);
-      setProducts(data);
+      const data = await getHMProducts(0, 12);
+      setProducts(data.results);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    getProducts();
+    getProductsHM();
   }, []);
 
   const fetchMoreData = async () => {
     try {
-      const data = await getAll(index);
-      setProducts((prevItems) => [...prevItems, ...data]);
-      data.length > 0 ? setHasMore(true) : setHasMore(false);
+      const data = await getHMProducts(index, 12);
+      setProducts((prevItems) => [...prevItems, ...data.results]);
+      data.results.length > 0 ? setHasMore(true) : setHasMore(false);
     } catch (error) {
       console.log(error);
     }
 
-    setIndex((prevIndex) => prevIndex + 12);
+    setIndex((prevIndex) => prevIndex + 1);
   };
 
   console.log(products);
@@ -52,7 +61,7 @@ const Home = () => {
       >
         {products &&
           products.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product.defaultArticle.code} product={product} />
           ))}
       </div>
     </InfiniteScroll>
