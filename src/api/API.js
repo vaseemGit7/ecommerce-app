@@ -30,7 +30,7 @@ export const getProduct = (id) => {
 
 export const getHMProducts = (currentPage, limit) => {
   const params = {
-    country: "us",
+    country: "in",
     lang: "en",
     currentpage: currentPage,
     pagesize: limit,
@@ -51,7 +51,7 @@ export const getHMProducts = (currentPage, limit) => {
 export const getProductDetail = (productCode) => {
   const params = {
     lang: "en",
-    country: "us",
+    country: "in",
     productcode: productCode,
   };
 
