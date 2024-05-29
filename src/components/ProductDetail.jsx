@@ -30,6 +30,7 @@ const ProductDetail = () => {
 
   if (product) {
     productData = {
+      id: product.code,
       name: product.name,
       price: product.whitePrice.price,
       image: product.articlesList[0].galleryDetails[0].baseUrl,
@@ -38,6 +39,7 @@ const ProductDetail = () => {
 
   const addProduct = () => {
     dispatch(addProductToCart(productData));
+    alert(`${productData.name} is added to cart`);
   };
 
   console.log(product);
