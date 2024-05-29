@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { removeProductFromCart } from "../actions/userActions";
 
 const Cart = () => {
   const cartProduct = useSelector((state) => state.cartReducer);
+  const dispatch = useDispatch();
   const [orderValue, setOrderValue] = useState(0);
-  const [deliveryCharge, setDeliveryCharge] = useState(30);
+  const [deliveryCharge, setDeliveryCharge] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
@@ -25,6 +27,10 @@ const Cart = () => {
     calculateTotalPrice();
   }, [cartProduct, deliveryCharge, orderValue]);
 
+  const handleRemoveProduct = (id) => {
+    dispatch(removeProductFromCart(id));
+  };
+
   console.log(cartProduct);
   return (
     <div className="mx-28">
@@ -42,13 +48,19 @@ const Cart = () => {
               cartProduct.map((product) => (
                 <div
                   key={product.name}
-                  className="grid grid-cols-[1fr_4fr] py-4 gap-3 border-b-2 border-neutral-300"
+                  className="grid grid-cols-[1fr_4fr_max-content] py-4 gap-3 border-b-2 border-neutral-300"
                 >
                   <img className="rounded-md" src={product.image} />
                   <div className="text-neutral-800">
                     <p className="font-semibold">{product.name}</p>
                     <p className="font-medium">₹ {product.price}</p>
                   </div>
+                  <button
+                    className="px-1  bg-red-500 self-start text-neutral-50 rounded"
+                    onClick={() => handleRemoveProduct(product.id)}
+                  >
+                    D
+                  </button>
                 </div>
               ))
             ) : (
