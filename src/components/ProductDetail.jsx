@@ -1,11 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { getProductDetail } from "../api/API";
+import { useDispatch } from "react-redux";
+import { addProductToCart } from "../actions/userActions";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const { id } = useParams();
   const hasFetched = useRef(false);
+  const dispatch = useDispatch();
+  let productData = undefined;
 
   useEffect(() => {
     const getProductById = async () => {
@@ -24,6 +28,18 @@ const ProductDetail = () => {
     }
   }, [id]);
 
+  if (product) {
+    productData = {
+      name: product.name,
+      price: product.whitePrice.price,
+      image: product.articlesList[0].galleryDetails[0].baseUrl,
+    };
+  }
+
+  const addProduct = () => {
+    dispatch(addProductToCart(productData));
+  };
+
   console.log(product);
 
   return (
@@ -40,7 +56,10 @@ const ProductDetail = () => {
             <div className="p-5 flex flex-col gap-2 ">
               <p className="text-xl font-semibold">{product.name}</p>
               <p className="text-lg font-medium">₹{product.whitePrice.price}</p>
-              <button className="py-2 px-3 w-3/5 text-center align-middle bg-neutral-800 text-base text-neutral-50 font-normal rounded">
+              <button
+                className="py-2 px-3 w-3/5 text-center align-middle bg-neutral-800 text-base text-neutral-50 font-normal rounded"
+                onClick={addProduct}
+              >
                 Add
               </button>
               <div>
