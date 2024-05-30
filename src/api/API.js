@@ -28,7 +28,7 @@ export const getProduct = (id) => {
     .catch((err) => console.log(err));
 };
 
-export const getHMProducts = (currentPage, limit) => {
+export const getHMProducts = (currentPage, limit, sort) => {
   const params = {
     country: "in",
     lang: "en",
@@ -36,6 +36,7 @@ export const getHMProducts = (currentPage, limit) => {
     pagesize: limit,
     categories: "men_all",
     concepts: "H&M MAN",
+    sortBy: sort,
   };
 
   return rapidApiAxios
