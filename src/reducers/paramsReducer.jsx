@@ -8,6 +8,8 @@ const paramsReducer = (state = initialState, actions) => {
   switch (actions.type) {
     case SET_SEARCH_QUERY:
       return { ...state, searchQuery: actions.payload };
+    default:
+      return state;
   }
 };
 
