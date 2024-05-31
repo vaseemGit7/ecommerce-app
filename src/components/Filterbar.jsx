@@ -1,4 +1,16 @@
-const Filterbar = ({ sortBy, handleSortByChange }) => {
+import { useDispatch, useSelector } from "react-redux";
+import { setParam } from "../actions/filterActions";
+
+const Filterbar = () => {
+  const paramsData = useSelector((state) => state.paramsReducer);
+  const dispatch = useDispatch();
+
+  const handleChange = (filter, e) => {
+    dispatch(setParam(filter, e.target.value));
+  };
+
+  console.log(paramsData.sortBy);
+
   return (
     <div className="flex flex-col px-4 py-3 gap-10 text-neutral-50 font-semibold bg-neutral-700 rounded-lg">
       <p className="text-xl font-semibold self-center">Filters</p>
@@ -9,8 +21,10 @@ const Filterbar = ({ sortBy, handleSortByChange }) => {
             <input
               type="radio"
               value="stock"
-              checked={sortBy === "stock"}
-              onChange={handleSortByChange}
+              checked={paramsData.sortBy === "stock"}
+              onChange={(e) => {
+                handleChange("sortBy", e);
+              }}
             />
             Recommended
           </label>
@@ -20,8 +34,10 @@ const Filterbar = ({ sortBy, handleSortByChange }) => {
             <input
               type="radio"
               value="newProduct"
-              checked={sortBy === "newProduct"}
-              onChange={handleSortByChange}
+              checked={paramsData.sortBy === "newProduct"}
+              onChange={(e) => {
+                handleChange("sortBy", e);
+              }}
             />
             Newest
           </label>
@@ -31,8 +47,10 @@ const Filterbar = ({ sortBy, handleSortByChange }) => {
             <input
               type="radio"
               value="ascPrice"
-              checked={sortBy === "ascPrice"}
-              onChange={handleSortByChange}
+              checked={paramsData.sortBy === "ascPrice"}
+              onChange={(e) => {
+                handleChange("sortBy", e);
+              }}
             />
             Lowest Price
           </label>
@@ -42,8 +60,10 @@ const Filterbar = ({ sortBy, handleSortByChange }) => {
             <input
               type="radio"
               value="descPrice"
-              checked={sortBy === "descPrice"}
-              onChange={handleSortByChange}
+              checked={paramsData.sortBy === "descPrice"}
+              onChange={(e) => {
+                handleChange("sortBy", e);
+              }}
             />
             Highest Price
           </label>
