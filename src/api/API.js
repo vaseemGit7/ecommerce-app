@@ -7,7 +7,7 @@ const Axios = axios.create({
 const rapidApiAxios = axios.create({
   baseURL: "https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com",
   headers: {
-    "X-RapidAPI-Key": "c259fb384fmsh3dbdaac87734028p1c79ecjsna129788cb268",
+    "X-RapidAPI-Key": "94876875d7mshe7c1cbc05508effp1d2569jsna270fe653dc2",
     "X-RapidAPI-Host": "apidojo-hm-hennes-mauritz-v1.p.rapidapi.com",
   },
 });
