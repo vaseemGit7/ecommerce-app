@@ -4,20 +4,22 @@ import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ProductLoading from "./ProductLoading";
 import Filterbar from "./Filterbar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setResultData } from "../actions/dataActions";
 
 const Home = () => {
   const [sortBy, setSortBy] = useState("stock");
   const [products, setProducts] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [index, setIndex] = useState(1);
+  const dispatch = useDispatch();
 
   const paramsState = useSelector((state) => state.paramsReducer);
 
   const getProductsHM = async () => {
     try {
       const data = await getHMProducts(0, 12, sortBy, paramsState);
-      console.log(data.facets);
+      dispatch(setResultData(data));
       setProducts(data.results);
     } catch (error) {
       console.log(error);
@@ -31,6 +33,7 @@ const Home = () => {
   const fetchMoreData = async () => {
     try {
       const data = await getHMProducts(index, 12, sortBy);
+      dispatch(setResultData(data));
       setProducts((prevItems) => [...prevItems, ...data.results]);
       data.results.length > 0 ? setHasMore(true) : setHasMore(false);
     } catch (error) {
