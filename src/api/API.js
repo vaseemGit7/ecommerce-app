@@ -28,15 +28,15 @@ export const getProduct = (id) => {
     .catch((err) => console.log(err));
 };
 
-export const getHMProducts = (currentPage, limit, sort) => {
+export const getHMProducts = (currentPage, limit, sort, state) => {
   const params = {
     country: "in",
     lang: "en",
     currentpage: currentPage,
     pagesize: limit,
     categories: "men_all",
-    concepts: "H&M MAN",
     sortBy: sort,
+    query: state.searchQuery,
   };
 
   return rapidApiAxios

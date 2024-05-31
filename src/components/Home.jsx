@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ProductLoading from "./ProductLoading";
 import Filterbar from "./Filterbar";
+import { useSelector } from "react-redux";
 
 const Home = () => {
   const [sortBy, setSortBy] = useState("stock");
@@ -11,9 +12,12 @@ const Home = () => {
   const [hasMore, setHasMore] = useState(true);
   const [index, setIndex] = useState(1);
 
+  const paramsState = useSelector((state) => state.paramsReducer);
+
   const getProductsHM = async () => {
     try {
-      const data = await getHMProducts(0, 12, sortBy);
+      const data = await getHMProducts(0, 12, sortBy, paramsState);
+      console.log(data.facets);
       setProducts(data.results);
     } catch (error) {
       console.log(error);
@@ -22,7 +26,7 @@ const Home = () => {
 
   useEffect(() => {
     getProductsHM();
-  }, [sortBy]);
+  }, [sortBy, paramsState]);
 
   const fetchMoreData = async () => {
     try {
