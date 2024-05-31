@@ -1,8 +1,20 @@
+import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { setSearchQuery } from "../actions/filterActions";
+import { useRef } from "react";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const searchRef = useRef("");
+
+  const handleSeachQuery = (e) => {
+    if (e.key === "Enter") {
+      dispatch(setSearchQuery(searchRef.current.value));
+    }
+  };
+
   return (
-    <div className="flex justify-between px-4 py-3 bg-neutral-200 drop-shadow-md rounded-lg">
+    <div className="flex justify-between px-4 py-3 bg-neutral-50 drop-shadow rounded-lg">
       <div className="flex">
         <p className="text-xl font-semibold mr-3">AppName</p>
         <NavLink
@@ -14,9 +26,11 @@ const Navbar = () => {
       </div>
       <div className="flex gap-4">
         <input
-          className="py-1 px-2 rounded-md bg-neutral-100 hover:drop-shadow-md focus:drop-shadow-md focus:outline-none"
+          ref={searchRef}
+          className="py-1 px-2 rounded-md bg-neutral-100 outline-neutral-400 hover:outline-2 focus:outline-2"
           type="text"
           placeholder="Search..."
+          onKeyDown={handleSeachQuery}
         ></input>
         <div className="flex gap-2">
           <NavLink
