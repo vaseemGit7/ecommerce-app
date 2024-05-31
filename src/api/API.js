@@ -28,14 +28,14 @@ export const getProduct = (id) => {
     .catch((err) => console.log(err));
 };
 
-export const getHMProducts = (currentPage, limit, sort, state) => {
+export const getHMProducts = (currentPage, limit, state) => {
   const params = {
     country: "in",
     lang: "en",
     currentpage: currentPage,
     pagesize: limit,
     categories: "men_all",
-    sortBy: sort,
+    sortBy: state.sortBy,
     query: state.searchQuery,
   };
 
