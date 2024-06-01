@@ -19,9 +19,9 @@ const FilterOptions = ({ facetName, facets }) => {
               <input
                 type="radio"
                 value={option.code}
-                checked={paramsData.contexts === option.code}
+                checked={paramsData[facets.code] === option.code}
                 onChange={(e) => {
-                  handleChange("contexts", e);
+                  handleChange(`${facets.code}`, e);
                 }}
               />
               {option.code}
