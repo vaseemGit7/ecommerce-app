@@ -37,6 +37,7 @@ export const getHMProducts = (currentPage, limit, state) => {
     categories: "men_all",
     sortBy: state.sortBy,
     query: state.searchQuery,
+    contexts: state.contexts,
   };
 
   return rapidApiAxios
