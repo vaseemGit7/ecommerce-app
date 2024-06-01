@@ -38,6 +38,7 @@ export const getHMProducts = (currentPage, limit, state) => {
     sortBy: state.sortBy,
     query: state.searchQuery,
     contexts: state.contexts,
+    concepts: state.concepts,
   };
 
   return rapidApiAxios
