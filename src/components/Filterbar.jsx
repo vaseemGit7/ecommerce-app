@@ -11,7 +11,12 @@ const Filterbar = () => {
     dispatch(setParam(filter, e.target.value));
   };
 
-  const occasionFacet = resultData?.facets?.[6];
+  const getFacet = (facetCode) => {
+    return resultData?.facets?.find((item) => item.code === facetCode);
+  };
+
+  const occasionFacet = getFacet("contexts");
+  const conceptFacet = getFacet("concepts");
 
   return (
     <div className="flex flex-col px-4 py-3 gap-10 text-neutral-50 font-semibold bg-neutral-700 rounded-lg">
@@ -72,6 +77,7 @@ const Filterbar = () => {
         </div>
       </div>
       <FilterOptions facetName={"Occasion"} facets={occasionFacet} />
+      <FilterOptions facetName={"Concept"} facets={conceptFacet} />
     </div>
   );
 };
