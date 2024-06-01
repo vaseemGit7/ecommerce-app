@@ -1,15 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setParam } from "../actions/filterActions";
+import FilterOptions from "./FilterOptions";
 
 const Filterbar = () => {
   const paramsData = useSelector((state) => state.paramsReducer);
+  const resultData = useSelector((state) => state.dataReducer);
   const dispatch = useDispatch();
 
   const handleChange = (filter, e) => {
     dispatch(setParam(filter, e.target.value));
   };
 
-  console.log(paramsData.sortBy);
+  const occasionFacet = resultData?.facets?.[6];
 
   return (
     <div className="flex flex-col px-4 py-3 gap-10 text-neutral-50 font-semibold bg-neutral-700 rounded-lg">
@@ -69,6 +71,7 @@ const Filterbar = () => {
           </label>
         </div>
       </div>
+      <FilterOptions facetName={"Occasion"} facets={occasionFacet} />
     </div>
   );
 };
