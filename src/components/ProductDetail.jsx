@@ -8,6 +8,7 @@ import DetailLoading from "./DetailLoading";
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [currentVariant, setCurrentVariant] = useState(null);
+  const [selectedSize, setSelectedSize] = useState(null);
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const hasFetched = useRef(false);
@@ -48,7 +49,9 @@ const ProductDetail = () => {
       id: product.code,
       name: product.name,
       price: product.whitePrice.price,
-      image: product.articlesList[0].galleryDetails[0].baseUrl,
+      image: currentVariant?.galleryDetails[0]?.baseUrl,
+      color: currentVariant?.colourDescription,
+      size: selectedSize,
     };
   }
 
@@ -101,7 +104,21 @@ const ProductDetail = () => {
                   </div>
                 ))}
             </div>
-            <div></div>
+            <p className="text-base font-medium">SIZES</p>
+            <div className="flex gap-2">
+              {currentVariant &&
+                currentVariant.variantsList.map((item) => (
+                  <div
+                    className={`p-2 w-1/5 text-center text-sm font-medium border-2 border-neutral-400 hover:bg-neutral-200 ${
+                      selectedSize === item.size.name ? "bg-neutral-300" : ""
+                    }`}
+                    key={item.code}
+                    onClick={() => setSelectedSize(item.size.name)}
+                  >
+                    {item.size.name}
+                  </div>
+                ))}
+            </div>
             <button
               className="py-2 px-3 w-3/5 text-center align-middle bg-neutral-800 text-base text-neutral-50 font-normal rounded"
               onClick={addProduct}
