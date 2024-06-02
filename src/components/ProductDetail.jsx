@@ -7,11 +7,19 @@ import DetailLoading from "./DetailLoading";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
+  const [currentVariant, setCurrentVariant] = useState(null);
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const hasFetched = useRef(false);
   const dispatch = useDispatch();
   let productData = undefined;
+
+  const handleVariantSelection = (code) => {
+    const selectedVariant = product?.articlesList?.find(
+      (item) => item.code === code
+    );
+    setCurrentVariant(selectedVariant);
+  };
 
   useEffect(() => {
     const getProductById = async () => {
@@ -31,6 +39,10 @@ const ProductDetail = () => {
     }
   }, [id]);
 
+  useEffect(() => {
+    handleVariantSelection(id);
+  }, [product]);
+
   if (product) {
     productData = {
       id: product.code,
@@ -46,6 +58,7 @@ const ProductDetail = () => {
   };
 
   console.log(product);
+  console.log(currentVariant);
 
   return (
     <div
@@ -60,12 +73,35 @@ const ProductDetail = () => {
           <div className="w-5/6">
             <img
               className="rounded"
-              src={product.articlesList[0].galleryDetails[0].baseUrl}
+              src={currentVariant?.galleryDetails[0]?.baseUrl}
             />
           </div>
           <div className="p-5 flex flex-col gap-2 ">
             <p className="text-xl font-semibold">{product.name}</p>
             <p className="text-lg font-medium">₹{product.whitePrice.price}</p>
+            <p className="text-base font-medium">
+              {currentVariant?.colourDescription}
+            </p>
+            <div className="flex h-1/5 gap-2 p-2 overflow-x-auto">
+              {product &&
+                product.articlesList.map((item) => (
+                  <div
+                    className={`flex items-center justify-center cursor-pointer hover:drop-shadow rounded ${
+                      currentVariant?.code === item.code
+                        ? "outline outline-neutral-500"
+                        : ""
+                    }`}
+                    key={item.code}
+                    onClick={() => handleVariantSelection(item.code)}
+                  >
+                    <img
+                      className="h-full"
+                      src={item?.galleryDetails[0]?.baseUrl}
+                    />
+                  </div>
+                ))}
+            </div>
+            <div></div>
             <button
               className="py-2 px-3 w-3/5 text-center align-middle bg-neutral-800 text-base text-neutral-50 font-normal rounded"
               onClick={addProduct}
