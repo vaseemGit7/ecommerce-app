@@ -4,8 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { v4 as uuid } from "uuid";
 import { setUser } from "../actions/userActions";
 import CredentialInput from "./CredentialInput";
+import storageManager from "../utils/storageManager";
 
 const LoginPage = () => {
   const emailIdInput = useRef(null);
@@ -17,6 +19,11 @@ const LoginPage = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [isNewAccount, setIsNewAccount] = useState(false);
+
+  const getUniqueId = () => {
+    const uniqueId = uuid();
+    return uniqueId;
+  };
 
   const signupValidationSchema = Yup.object().shape({
     email: Yup.string()
@@ -93,6 +100,28 @@ const LoginPage = () => {
     setIsNewAccount((prevState) => !prevState);
   };
 
+  const handleAddNewUser = (values) => {
+    const credentials = {
+      email: values.email,
+      password: values.password,
+    };
+
+    const newUser = {
+      id: getUniqueId(),
+      credentials: credentials,
+      userDetails: {
+        email: values.email,
+        dataOfBirth: values.dob,
+      },
+    };
+
+    const exisitingUsers = storageManager.loadFromLocalStorage("usersDb") || [];
+
+    const updatedUsers = [...exisitingUsers, newUser];
+
+    storageManager.saveToLocalStorage("usersDb", updatedUsers);
+  };
+
   return (
     <div
       className="h-full grid place-items-center"
@@ -119,6 +148,7 @@ const LoginPage = () => {
                 validationSchema={signupValidationSchema}
                 onSubmit={(values) => {
                   alert(JSON.stringify(values, null, 2));
+                  handleAddNewUser(values);
                 }}
               >
                 {(formik) => (
