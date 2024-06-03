@@ -6,9 +6,9 @@ import {
 } from "../reducers/cartReducer";
 import { REMOVE_PRODUCT_CART } from "../reducers/cartReducer";
 
-export const setUser = (userId) => ({
+export const setUser = (userData) => ({
   type: SET_USER,
-  payload: userId,
+  payload: userData,
 });
 
 export const addProductToCart = (product) => ({

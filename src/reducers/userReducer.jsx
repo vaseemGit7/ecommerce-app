@@ -1,13 +1,11 @@
 export const SET_USER = "SET_USER";
 
-const intialState = {
-  id: "",
-};
+const intialState = {};
 
 const userReducer = (state = intialState, actions) => {
   switch (actions.type) {
     case SET_USER:
-      return { ...state, id: actions.payload };
+      return actions.payload;
     default:
       return state;
   }

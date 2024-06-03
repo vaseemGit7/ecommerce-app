@@ -53,7 +53,7 @@ const LoginPage = () => {
         user.credentials.password === values.password
       ) {
         validUser = true;
-        dispatch(setUser(user.id));
+        dispatch(setUser(user));
         navigate("/dashboard");
         return;
       }
@@ -76,7 +76,7 @@ const LoginPage = () => {
       credentials: credentials,
       userDetails: {
         email: values.email,
-        dataOfBirth: values.dob,
+        dateOfBirth: values.dob,
       },
     };
 
