@@ -2,7 +2,11 @@ import { useRef, useState } from "react";
 import { credentialsDb } from "../database/credentials";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { Formik } from "formik";
+import * as Yup from "yup";
 import { setUser } from "../actions/userActions";
+import CredentialInput from "./CredentialInput";
+
 const LoginPage = () => {
   const emailIdInput = useRef(null);
   const passwordInput = useRef(null);
@@ -13,6 +17,19 @@ const LoginPage = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [isNewAccount, setIsNewAccount] = useState(false);
+
+  const signupValidationSchema = Yup.object().shape({
+    email: Yup.string()
+      .matches(
+        /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/,
+        "*Invalid email address"
+      )
+      .required("*Please fill in this field"),
+    password: Yup.string()
+      .min(8, "*Must be atleast 8 characters")
+      .required("*Please fill in this field"),
+    dob: Yup.string().required("*Please fill in this field"),
+  });
 
   const checkEmailValidity = () => {
     const emailValue = emailIdInput.current.value.trim();
@@ -97,7 +114,38 @@ const LoginPage = () => {
         <div className=" mx-12 my-24 py-16 ">
           {isNewAccount ? (
             <>
-              Sign Up
+              <Formik
+                initialValues={{ email: "", password: "", dob: "" }}
+                validationSchema={signupValidationSchema}
+                onSubmit={(values) => {
+                  alert(JSON.stringify(values, null, 2));
+                }}
+              >
+                {(formik) => (
+                  <form
+                    onSubmit={formik.handleSubmit}
+                    className="flex flex-col items-center gap-7"
+                  >
+                    <CredentialInput name="email" type="email" label="EMAIL" />
+                    <CredentialInput
+                      name="password"
+                      type="password"
+                      label="PASSWORD"
+                    />
+                    <CredentialInput
+                      name="dob"
+                      type="date"
+                      label="DATE OF BIRTH"
+                    />
+                    <button
+                      className="w-32 px-8 py-2 text-md font-semibold  text-neutral-50 bg-violet-900 drop-shadow-md rounded-md hover:bg-violet-950"
+                      type="submit"
+                    >
+                      SIGN UP
+                    </button>
+                  </form>
+                )}
+              </Formik>
               <div className="flex gap-1 mt-4 text-sm font-normal justify-end">
                 <p className="text-neutral-700">Already have an account?</p>
                 <p
