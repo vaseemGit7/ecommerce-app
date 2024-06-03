@@ -31,6 +31,10 @@ const Cart = () => {
     dispatch(removeProductFromCart(id));
   };
 
+  const handleProductTotalPrice = (productPrice, quantity) => {
+    return productPrice * quantity;
+  };
+
   console.log(cartProduct);
   return (
     <div className="mx-28">
@@ -51,9 +55,23 @@ const Cart = () => {
                   className="grid grid-cols-[1fr_4fr_max-content] py-4 gap-3 border-b-2 border-neutral-300"
                 >
                   <img className="rounded-md" src={product.image} />
-                  <div className="text-neutral-800">
-                    <p className="font-semibold">{product.name}</p>
+                  <div className="text-neutral-800  self-center">
+                    <p className="text-lg font-semibold">{product.name}</p>
                     <p className="font-medium">₹ {product.price}</p>
+                    <div className="flex gap-2">
+                      <p className="font-normal text-neutral-600">Size:</p>
+                      <p className="font-medium">{product.size}</p>
+                    </div>
+                    <div className="flex gap-2">
+                      <p className="font-normal text-neutral-600">Color:</p>
+                      <p className="font-medium">{product.color}</p>
+                    </div>
+                    <div className="flex gap-2">
+                      <p className="font-normal text-neutral-600">Total:</p>
+                      <p className="font-medium">
+                        ₹ {handleProductTotalPrice(product.price, 2)}
+                      </p>
+                    </div>
                   </div>
                   <button
                     className="px-1  bg-red-500 self-start text-neutral-50 rounded"
