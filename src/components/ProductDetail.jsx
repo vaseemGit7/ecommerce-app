@@ -52,6 +52,7 @@ const ProductDetail = () => {
       image: currentVariant?.galleryDetails[0]?.baseUrl,
       color: currentVariant?.colourDescription,
       size: selectedSize,
+      quantity: 1,
     };
   }
 
