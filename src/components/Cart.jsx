@@ -5,6 +5,7 @@ import {
   increaseProductQuantity,
   removeProductFromCart,
 } from "../actions/userActions";
+import { NavLink } from "react-router-dom";
 
 const Cart = () => {
   const cartProduct = useSelector((state) => state.cartReducer);
@@ -136,9 +137,14 @@ const Cart = () => {
               <p className="text-xl font-medium">Total charges</p>
               <p className="text-xl font-medium">Rs. {totalPrice}</p>
             </div>
-            <button className="py-2 px-3 self-center w-3/5 mt-3 text-center align-middle bg-neutral-800 text-base text-neutral-50 font-normal rounded hover:drop-shadow-lg">
-              Place Order
-            </button>
+            <NavLink
+              to="/dashboard/checkout"
+              state={{ deliveryCharge, totalPrice }}
+            >
+              <button className="py-2 px-3 self-center w-3/5 mt-3 text-center align-middle bg-neutral-800 text-base text-neutral-50 font-normal rounded hover:drop-shadow-lg">
+                Checkout
+              </button>
+            </NavLink>
           </div>
         </div>
       </div>

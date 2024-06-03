@@ -5,6 +5,7 @@ import Home from "../components/Home";
 import Profile from "../components/Profile";
 import ProductDetail from "../components/ProductDetail";
 import Cart from "../components/Cart";
+import Checkout from "../components/Checkout";
 
 const routes = [
   {
@@ -21,6 +22,7 @@ const routes = [
       { path: "profile", name: "Profile", element: <Profile /> },
       { path: "product/:id", element: <ProductDetail /> },
       { path: "cart", name: "Cart", element: <Cart /> },
+      { path: "checkout", name: "Checkout", element: <Checkout /> },
     ],
   },
 ];
