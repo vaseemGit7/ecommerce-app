@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { removeProductFromCart } from "../actions/userActions";
+import {
+  decreaseProductQuantity,
+  increaseProductQuantity,
+  removeProductFromCart,
+} from "../actions/userActions";
 
 const Cart = () => {
   const cartProduct = useSelector((state) => state.cartReducer);
@@ -12,7 +16,7 @@ const Cart = () => {
   useEffect(() => {
     const calculateOrderValue = () => {
       const value = cartProduct.reduce(
-        (acc, product) => acc + product.price,
+        (acc, product) => acc + product.price * product.quantity,
         0
       );
       setOrderValue(value);
@@ -31,8 +35,12 @@ const Cart = () => {
     dispatch(removeProductFromCart(id));
   };
 
-  const handleProductTotalPrice = (productPrice, quantity) => {
-    return productPrice * quantity;
+  const handleQuantityIncrement = (id) => {
+    dispatch(increaseProductQuantity(id));
+  };
+
+  const handleQuantityDecrement = (id) => {
+    dispatch(decreaseProductQuantity(id));
   };
 
   console.log(cartProduct);
@@ -69,8 +77,30 @@ const Cart = () => {
                     <div className="flex gap-2">
                       <p className="font-normal text-neutral-600">Total:</p>
                       <p className="font-medium">
-                        ₹ {handleProductTotalPrice(product.price, 2)}
+                        ₹ {product.price * product.quantity}
                       </p>
+                    </div>
+                    <div className="flex items-center justify-items-center mt-3 drop-shadow">
+                      <button
+                        className={`px-4 py-1  text-neutral-500 font-semibold text-lg rounded-l-md hover:scale-[1.05] ${
+                          product.quantity === 0
+                            ? "bg-neutral-300 hover:scale-100"
+                            : "bg-slate-200"
+                        }`}
+                        disabled={product.quantity === 0}
+                        onClick={() => handleQuantityDecrement(product.id)}
+                      >
+                        -
+                      </button>
+                      <p className="px-4 py-1 font-semibold text-lg text-neutral-800">
+                        {product.quantity}
+                      </p>
+                      <button
+                        className="px-4 py-1 bg-slate-200 text-neutral-500 font-semibold text-lg rounded-r-md hover:scale-[1.05]"
+                        onClick={() => handleQuantityIncrement(product.id)}
+                      >
+                        +
+                      </button>
                     </div>
                   </div>
                   <button
