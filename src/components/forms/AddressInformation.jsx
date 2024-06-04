@@ -1,7 +1,19 @@
 import { Formik } from "formik";
+import * as Yup from "yup";
 import DataInput from "./DataInput";
 
 const AddressInformation = () => {
+  const addressInfoValidationSchema = Yup.object().shape({
+    streetAddress: Yup.string().required("*Please enter an address"),
+    flatAddress: Yup.string().required("*Please enter flat no."),
+    town: Yup.string().required("*Please enter a town / city"),
+    pincode: Yup.number()
+      .typeError("*Please enter valid phone number")
+      .positive("*Pincode cannot be negative")
+      .required("*Please enter a pincode"),
+    state: Yup.string().required("*Please enter a state"),
+  });
+
   return (
     <Formik
       initialValues={{
@@ -11,6 +23,7 @@ const AddressInformation = () => {
         pincode: "",
         state: "",
       }}
+      validationSchema={addressInfoValidationSchema}
     >
       {(formik) => (
         <form
