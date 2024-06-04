@@ -1,4 +1,5 @@
 import { useLocation } from "react-router-dom";
+import UserInformation from "./forms/UserInformation";
 
 const Checkout = () => {
   const location = useLocation();
@@ -6,11 +7,14 @@ const Checkout = () => {
   return (
     <div className="mx-28">
       <div className="grid grid-cols-[3fr_2fr] ">
-        <div className="flex flex-col p-4 gap-3">
+        <div className="flex flex-col p-6 gap-3">
           <div>
             <p className="text-2xl font-bold"> Checkout</p>
           </div>
-          <p className="text-lg font-medium">My information</p>
+          <div className="p-3">
+            <p className="text-lg font-medium mb-4">My information</p>
+            <UserInformation />
+          </div>
           <p className="text-lg font-medium">Billing address</p>
           <p className="text-lg font-medium">View order details</p>
         </div>

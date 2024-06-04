@@ -6,7 +6,7 @@ const DataInput = ({ label, ...props }) => {
     <div className="relative flex flex-col gap-1">
       <label className="text-sm font-medium text-neutral-800">{label}</label>
       <Field
-        className="w-96 px-2 py-2 text-base outline outline-1 outline-neutral-300 bg-neutral-100 rounded-md focus:outline focus:outline-neutral-500"
+        className="px-2 py-2 text-base outline outline-1 outline-neutral-300 bg-neutral-100 rounded-md focus:outline focus:outline-neutral-500"
         {...field}
         {...props}
       />
