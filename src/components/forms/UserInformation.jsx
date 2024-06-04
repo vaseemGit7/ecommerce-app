@@ -1,9 +1,21 @@
 import { Formik } from "formik";
+import * as Yup from "yup";
 import DataInput from "./DataInput";
 
 const UserInformation = () => {
+  const userInfoValidationSchema = Yup.object().shape({
+    fullName: Yup.string().required("*Please enter your full name"),
+    phoneNumber: Yup.number()
+      .positive("*A phone number cannot be negative")
+      .typeError("*Please enter valid phone number")
+      .required("*Please enter your phone number"),
+  });
+
   return (
-    <Formik initialValues={{ fullName: "", phoneNumber: "" }}>
+    <Formik
+      initialValues={{ fullName: "", phoneNumber: "" }}
+      validationSchema={userInfoValidationSchema}
+    >
       {(formik) => (
         <form
           onSubmit={formik.handleSubmit}
