@@ -1,9 +1,12 @@
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import UserInformation from "./forms/UserInformation";
 
 const Checkout = () => {
   const location = useLocation();
   const { deliveryCharge, totalPrice } = location.state;
+  const userData = useSelector((state) => state.userReducer);
+
   return (
     <div className="mx-28">
       <div className="grid grid-cols-[3fr_2fr] ">
@@ -13,7 +16,7 @@ const Checkout = () => {
           </div>
           <div className="p-3">
             <p className="text-lg font-medium mb-4">My information</p>
-            <UserInformation />
+            <UserInformation userData={userData} />
           </div>
           <p className="text-lg font-medium">Billing address</p>
           <p className="text-lg font-medium">View order details</p>

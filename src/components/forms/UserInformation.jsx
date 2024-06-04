@@ -1,8 +1,9 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
 import DataInput from "./DataInput";
+import storageManager from "../../utils/storageManager";
 
-const UserInformation = () => {
+const UserInformation = ({ userData }) => {
   const userInfoValidationSchema = Yup.object().shape({
     fullName: Yup.string().required("*Please enter your full name"),
     phoneNumber: Yup.number()
@@ -11,10 +12,25 @@ const UserInformation = () => {
       .required("*Please enter your phone number"),
   });
 
+  const handleSubmission = (values) => {
+    const database = storageManager.loadFromLocalStorage("usersDb");
+    const userDB = database.find((user) => user.id === userData.id);
+    const updatedUserDB = {
+      ...userDB,
+      userDetails: { ...userDB.userDetails, ...values },
+    };
+    const exisitingUsers = database.filter((user) => user.id !== userData.id);
+
+    const updatedUsers = [...exisitingUsers, updatedUserDB];
+
+    storageManager.saveToLocalStorage("usersDb", updatedUsers);
+  };
+
   return (
     <Formik
       initialValues={{ fullName: "", phoneNumber: "" }}
       validationSchema={userInfoValidationSchema}
+      onSubmit={(values) => handleSubmission(values)}
     >
       {(formik) => (
         <form
