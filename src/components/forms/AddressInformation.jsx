@@ -1,8 +1,15 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { v4 as uuid } from "uuid";
 import DataInput from "./DataInput";
+import storageManager from "../../utils/storageManager";
 
-const AddressInformation = () => {
+const AddressInformation = ({ userData }) => {
+  const getUniqueId = () => {
+    const uniqueId = uuid();
+    return uniqueId;
+  };
+
   const addressInfoValidationSchema = Yup.object().shape({
     streetAddress: Yup.string().required("*Please enter an address"),
     flatAddress: Yup.string().required("*Please enter flat no."),
@@ -14,6 +21,25 @@ const AddressInformation = () => {
     state: Yup.string().required("*Please enter a state"),
   });
 
+  const handleSubmission = (values) => {
+    const newValue = { id: getUniqueId(), ...values };
+    const database = storageManager.loadFromLocalStorage("usersDb");
+    const userDB = database.find((user) => user.id === userData.id);
+    const existingAddresses = userDB.userDetails.addresses || [];
+    const updatedUserDB = {
+      ...userDB,
+      userDetails: {
+        ...userDB.userDetails,
+        addresses: [...existingAddresses, newValue],
+      },
+    };
+    const existingUsers = database.filter((user) => user.id !== userData.id);
+
+    const updatedUsers = [...existingUsers, updatedUserDB];
+
+    storageManager.saveToLocalStorage("usersDb", updatedUsers);
+  };
+
   return (
     <Formik
       initialValues={{
@@ -24,6 +50,7 @@ const AddressInformation = () => {
         state: "",
       }}
       validationSchema={addressInfoValidationSchema}
+      onSubmit={(values) => handleSubmission(values)}
     >
       {(formik) => (
         <form

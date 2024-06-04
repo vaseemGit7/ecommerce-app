@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import UserInformation from "./forms/UserInformation";
+import AddressInformation from "./forms/AddressInformation";
 
 const Checkout = () => {
   const location = useLocation();
@@ -18,7 +19,10 @@ const Checkout = () => {
             <p className="text-lg font-medium mb-4">My information</p>
             <UserInformation userData={userData} />
           </div>
-          <p className="text-lg font-medium">Billing address</p>
+          <div className="p-3">
+            <p className="text-lg font-medium mb-4">Billing address</p>
+            <AddressInformation userData={userData} />
+          </div>
           <p className="text-lg font-medium">View order details</p>
         </div>
         <div className="mt-2 p-3">
