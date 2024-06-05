@@ -7,6 +7,7 @@ const Checkout = () => {
   const location = useLocation();
   const { deliveryCharge, totalPrice } = location.state;
   const userData = useSelector((state) => state.userReducer);
+  const cartProduct = useSelector((state) => state.cartReducer);
 
   return (
     <div className="mx-28">
@@ -23,7 +24,56 @@ const Checkout = () => {
             <p className="text-lg font-medium mb-4">Billing address</p>
             <AddressInformation userData={userData} />
           </div>
-          <p className="text-lg font-medium">View order details</p>
+          <div className="p-3">
+            <p className="text-lg font-medium mb-4">View order details</p>
+            <div className="flex gap-2">
+              {cartProduct.map((product) => (
+                <div
+                  key={product.id}
+                  className="grid  w-44 grid-rows-[max-content_1fr] text-neutral-800 outline outline-1 outline-neutral-600 rounded p-2"
+                >
+                  <img
+                    className="place-self-center h-40 rounded"
+                    src={product.image}
+                  />
+                  <div className="grid grid-rows-[max-content_1fr] gap-1">
+                    <p className="text-sm font-medium">{product.name}</p>
+                    <div className="self-end">
+                      <p className="text-sm font-medium">₹ {product.price}</p>
+                      <div className="flex gap-2">
+                        <p className="text-sm font-normal text-neutral-600">
+                          Size:
+                        </p>
+                        <p className=" text-sm font-medium">{product.size}</p>
+                      </div>
+                      <div className="flex gap-2">
+                        <p className="text-sm font-normal text-neutral-600">
+                          Color:
+                        </p>
+                        <p className=" text-sm font-medium">{product.color}</p>
+                      </div>
+                      <div className="flex gap-2">
+                        <p className="text-sm font-normal text-neutral-600">
+                          Total:
+                        </p>
+                        <p className=" text-sm font-medium">
+                          ₹ {product.price * product.quantity}
+                        </p>
+                      </div>
+                      <div className="flex gap-2">
+                        <p className="text-sm font-normal text-neutral-600">
+                          Quantity:
+                        </p>
+                        <p className=" text-sm font-medium">
+                          {product.quantity}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
         <div className="mt-2 p-3">
           <div className="flex flex-col bg-slate-100 p-3 rounded-md">
