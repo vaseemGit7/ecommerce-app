@@ -1,16 +1,18 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import UserInformation from "./forms/UserInformation";
 import AddressInformation from "./forms/AddressInformation";
 import storageManager from "../utils/storageManager";
 import { getCurrentDate } from "../utils/dateHandler";
+import { removeAllProductFromCart } from "../actions/userActions";
 
 const Checkout = () => {
   const location = useLocation();
   const { deliveryCharge, totalPrice } = location.state;
   const userData = useSelector((state) => state.userReducer);
   const cartProduct = useSelector((state) => state.cartReducer);
+  const dispatch = useDispatch();
   const [sectionVisibility, setSectionVisiblity] = useState({
     userInformation: true,
     addressInformation: true,
@@ -46,8 +48,9 @@ const Checkout = () => {
     };
 
     const updatedUsers = [...existingUsers, updatedUserDB];
-
     storageManager.saveToLocalStorage("usersDb", updatedUsers);
+
+    dispatch(removeAllProductFromCart());
   };
 
   return (
