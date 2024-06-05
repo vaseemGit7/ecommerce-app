@@ -1,16 +1,19 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import storageManager from "../utils/storageManager";
 
 const Profile = () => {
   const userData = useSelector((state) => state.userReducer);
   const [activeSection, setActiveSection] = useState("profileOverview");
 
+  const database = storageManager.loadFromLocalStorage("usersDb");
+  const userDB = database.find((user) => user.id === userData.id);
+  const userDetails = userDB.userDetails;
+  const userAddress = userDB.userDetails.addresses[0];
+
   const handleActiveSection = (section) => {
     setActiveSection(section);
   };
-
-  const userDetails = userData.userDetails;
-  const userAddress = userData.userDetails.addresses[0];
 
   console.log(userData.userDetails);
 
@@ -83,7 +86,67 @@ const Profile = () => {
           </div>
         </div>
       ) : (
-        <div> </div>
+        <div className="w-3/6 place-self-center">
+          <div className="p-3 flex flex-col gap-2 items-center bg-slate-100 rounded mb-3">
+            {[...userDetails.orderHistory].reverse().map((product) => (
+              <div
+                key={product.id}
+                className="w-5/6 p-2 grid grid-cols-[1fr_4fr] outline outline-2 outline-neutral-500 rounded bg-neutral-50"
+              >
+                <img className="rounded" src={product.image} />
+                <div className="p-2 flex flex-col justify-between text-neutral-800">
+                  <p className="text-lg font-semibold">{product.name}</p>
+                  <>
+                    <div className="flex justify-between">
+                      <div className="flex flex-col gap-2">
+                        <div className="flex gap-1">
+                          <p className="text-sm font-medium">Price : </p>
+                          <p className="text-sm font-medium">
+                            ₹ {product.price}
+                          </p>
+                        </div>
+                        <div className="flex gap-1">
+                          <p className="text-sm font-medium">Color : </p>
+                          <p className="text-sm font-medium">{product.color}</p>
+                        </div>
+                        <div className="flex gap-1">
+                          <p className="text-sm font-medium">Order Placed : </p>
+                          <p className="text-sm font-medium">
+                            {product.orderPlaced}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <div className="flex gap-1">
+                          <p className="text-sm font-medium">Article No. </p>
+                          <p className="text-sm font-medium">{product.id}</p>
+                        </div>
+                        <div className="flex gap-1">
+                          <p className="text-sm font-medium">Size : </p>
+                          <p className="text-sm font-medium">{product.size}</p>
+                        </div>
+                        <div className="flex gap-1">
+                          <p className="text-sm font-medium">Quantity : </p>
+                          <p className="text-sm font-medium">
+                            {product.quantity}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex justify-between">
+                      <div className="flex gap-2"></div>
+                      <div className="flex gap-2"></div>
+                    </div>
+                    <div className="flex justify-between">
+                      <div className="flex gap-2"></div>
+                      <div className="flex gap-2 "></div>
+                    </div>
+                  </>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       )}
     </div>
   );
