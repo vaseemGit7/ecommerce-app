@@ -42,7 +42,7 @@ const Checkout = () => {
             <p className="text-lg font-medium mb-4">Billing address</p>
             <AddressInformation
               userData={userData}
-              sectionVisibitity={sectionVisibility}
+              sectionVisibility={sectionVisibility}
               handleSectionVisibility={handleSectionVisibility}
             />
           </div>
