@@ -31,8 +31,6 @@ const AddressInformation = ({
 
   const handleSubmission = (values) => {
     const newValue = { id: getUniqueId(), ...values };
-    const database = storageManager.loadFromLocalStorage("usersDb");
-    const userDB = database.find((user) => user.id === userData.id);
     const existingAddresses = userDB.userDetails.addresses || [];
     const updatedUserDB = {
       ...userDB,
@@ -73,11 +71,11 @@ const AddressInformation = ({
       ) : (
         <Formik
           initialValues={{
-            streetAddress: "",
-            flatAddress: "",
-            town: "",
-            pincode: "",
-            state: "",
+            streetAddress: userAddress.streetAddress || "",
+            flatAddress: userAddress.flatAddress || "",
+            town: userAddress.town || "",
+            pincode: userAddress.pincode || "",
+            state: userAddress.state || "",
           }}
           validationSchema={addressInfoValidationSchema}
           onSubmit={(values) => handleSubmission(values)}
@@ -90,7 +88,7 @@ const AddressInformation = ({
               <div className="flex flex-col gap-1">
                 <p className="text-sm font-medium text-neutral-800">Name</p>
                 <p className="text-sm font-medium text-neutral-800">
-                  Vaseem Ahamed
+                  {userDB.userDetails.fullName}
                 </p>
               </div>
               <DataInput

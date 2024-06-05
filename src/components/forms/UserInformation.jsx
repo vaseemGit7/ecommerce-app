@@ -55,7 +55,11 @@ const UserInformation = ({
         </div>
       ) : (
         <Formik
-          initialValues={{ fullName: "", phoneNumber: "" }}
+          initialValues={{
+            fullName: userDetails.fullName || "",
+            phoneNumber: userDetails.phoneNumber || "",
+            dateOfBirth: userDetails.dateOfBirth || "",
+          }}
           validationSchema={userInfoValidationSchema}
           onSubmit={(values) => handleSubmission(values)}
         >
@@ -67,11 +71,11 @@ const UserInformation = ({
               <div className="flex flex-col gap-1">
                 <p className="text-sm font-medium text-neutral-800">Email</p>
                 <p className="text-sm font-medium text-neutral-800">
-                  vaseemahamed1030@gmail.com
+                  {userDetails.email}
                 </p>
               </div>
               <DataInput name="fullName" type="text" label="Full name" />
-              <DataInput name="dob" type="date" label="Date of birth" />
+              <DataInput name="dateOfBirth" type="date" label="Date of birth" />
               <DataInput
                 name="phoneNumber"
                 type="number"
