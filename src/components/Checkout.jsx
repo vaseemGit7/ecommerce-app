@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import UserInformation from "./forms/UserInformation";
 import AddressInformation from "./forms/AddressInformation";
-import { useState } from "react";
+import storageManager from "../utils/storageManager";
+import { getCurrentDate } from "../utils/dateHandler";
 
 const Checkout = () => {
   const location = useLocation();
@@ -21,7 +23,32 @@ const Checkout = () => {
     }));
   };
 
-  console.log(sectionVisibility.userInformation);
+  const handlePlaceOrder = () => {
+    alert("Order Placed Successfull!");
+
+    const unixDate = Date.now();
+    const updatedCartProducts = cartProduct.map((product) => ({
+      ...product,
+      orderPlaced: getCurrentDate(unixDate),
+    }));
+
+    const database = storageManager.loadFromLocalStorage("usersDb");
+    const userDB = database.find((user) => user.id === userData.id);
+    const existingUsers = database.filter((user) => user.id !== userData.id);
+
+    const existingOrders = userDB.userDetails.orderHistory || [];
+    const updatedUserDB = {
+      ...userDB,
+      userDetails: {
+        ...userDB.userDetails,
+        orderHistory: [...existingOrders, ...updatedCartProducts],
+      },
+    };
+
+    const updatedUsers = [...existingUsers, updatedUserDB];
+
+    storageManager.saveToLocalStorage("usersDb", updatedUsers);
+  };
 
   return (
     <div className="mx-28">
@@ -115,7 +142,10 @@ const Checkout = () => {
               <p className="text-xl font-medium">Total charges</p>
               <p className="text-xl font-medium">Rs. {totalPrice}</p>
             </div>
-            <button className="py-2 px-3 self-center w-3/5 mt-3 text-center align-middle bg-neutral-800 text-base text-neutral-50 font-normal rounded hover:drop-shadow-lg">
+            <button
+              className="py-2 px-3 self-center w-3/5 mt-3 text-center align-middle bg-neutral-800 text-base text-neutral-50 font-normal rounded hover:drop-shadow-lg"
+              onClick={handlePlaceOrder}
+            >
               Place Order
             </button>
           </div>
