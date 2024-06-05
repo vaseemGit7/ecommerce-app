@@ -1,4 +1,5 @@
 import { useRef, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 
 const ConfirmModal = ({ dialogToggle, handleDialogToggle }) => {
   const dialogModal = useRef(null);
@@ -30,12 +31,14 @@ const ConfirmModal = ({ dialogToggle, handleDialogToggle }) => {
               <button className="px-3 py-2 w-3/4 bg-neutral-800 font-medium text-neutral-50 rounded hover:drop-shadow-md">
                 Download Invoice
               </button>
-              <p
-                className="text-base font-medium hover:border-b-2 border-b-neutral-900 cursor-pointer"
-                onClick={handleNext}
-              >
-                Continue Shopping
-              </p>
+              <NavLink to="/dashboard/home">
+                <p
+                  className="text-base font-medium hover:border-b-2 border-b-neutral-900 cursor-pointer"
+                  onClick={handleNext}
+                >
+                  Continue Shopping
+                </p>
+              </NavLink>
             </div>
           </dialog>
         </div>
