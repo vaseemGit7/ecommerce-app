@@ -2,6 +2,7 @@ export const ADD_PRODUCT_CART = "ADD_PRODUCT_CART";
 export const REMOVE_PRODUCT_CART = "REMOVE_PRODUCT_CART";
 export const INCREASE_PRODUCT_QUANTITY = "INCREASE_PRODUCT_QUANTITY";
 export const DECREASE_PRODUCT_QUANTITY = "DECREASE_PRODUCT_QUANTITY";
+export const REMOVE_ALL_PRODUCT = "REMOVE_ALL_PRODUCT";
 
 const initialState = [];
 
@@ -23,6 +24,8 @@ const cartReducer = (state = initialState, actions) => {
       );
     case REMOVE_PRODUCT_CART:
       return state.filter((product) => product.id !== actions.payload);
+    case REMOVE_ALL_PRODUCT:
+      return initialState;
     default:
       return state;
   }
