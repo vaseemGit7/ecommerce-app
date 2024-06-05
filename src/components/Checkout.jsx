@@ -6,6 +6,7 @@ import AddressInformation from "./forms/AddressInformation";
 import storageManager from "../utils/storageManager";
 import { getCurrentDate } from "../utils/dateHandler";
 import { removeAllProductFromCart } from "../actions/userActions";
+import ConfirmModal from "./ConfirmModal";
 
 const Checkout = () => {
   const location = useLocation();
@@ -17,6 +18,7 @@ const Checkout = () => {
     userInformation: true,
     addressInformation: true,
   });
+  const [dialogToggle, setDialogToggle] = useState(false);
 
   const handleSectionVisibility = (section) => {
     setSectionVisiblity((prevState) => ({
@@ -25,9 +27,11 @@ const Checkout = () => {
     }));
   };
 
-  const handlePlaceOrder = () => {
-    alert("Order Placed Successfull!");
+  const handleDialogToggle = () => {
+    setDialogToggle((prevState) => !prevState);
+  };
 
+  const handlePlaceOrder = () => {
     const unixDate = Date.now();
     const updatedCartProducts = cartProduct.map((product) => ({
       ...product,
@@ -51,6 +55,7 @@ const Checkout = () => {
     storageManager.saveToLocalStorage("usersDb", updatedUsers);
 
     dispatch(removeAllProductFromCart());
+    handleDialogToggle();
   };
 
   return (
@@ -154,6 +159,10 @@ const Checkout = () => {
           </div>
         </div>
       </div>
+      <ConfirmModal
+        dialogToggle={dialogToggle}
+        handleDialogToggle={handleDialogToggle}
+      />
     </div>
   );
 };
