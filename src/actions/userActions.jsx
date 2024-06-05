@@ -3,6 +3,7 @@ import {
   ADD_PRODUCT_CART,
   DECREASE_PRODUCT_QUANTITY,
   INCREASE_PRODUCT_QUANTITY,
+  REMOVE_ALL_PRODUCT,
 } from "../reducers/cartReducer";
 import { REMOVE_PRODUCT_CART } from "../reducers/cartReducer";
 
@@ -29,4 +30,8 @@ export const decreaseProductQuantity = (id) => ({
 export const removeProductFromCart = (id) => ({
   type: REMOVE_PRODUCT_CART,
   payload: id,
+});
+
+export const removeAllProductFromCart = () => ({
+  type: REMOVE_ALL_PRODUCT,
 });
