@@ -2,12 +2,26 @@ import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import UserInformation from "./forms/UserInformation";
 import AddressInformation from "./forms/AddressInformation";
+import { useState } from "react";
 
 const Checkout = () => {
   const location = useLocation();
   const { deliveryCharge, totalPrice } = location.state;
   const userData = useSelector((state) => state.userReducer);
   const cartProduct = useSelector((state) => state.cartReducer);
+  const [sectionVisibility, setSectionVisiblity] = useState({
+    userInformation: true,
+    addressInformation: true,
+  });
+
+  const handleSectionVisibility = (section) => {
+    setSectionVisiblity((prevState) => ({
+      ...prevState,
+      [section]: !prevState[section],
+    }));
+  };
+
+  console.log(sectionVisibility.userInformation);
 
   return (
     <div className="mx-28">
@@ -18,11 +32,19 @@ const Checkout = () => {
           </div>
           <div className="p-3">
             <p className="text-lg font-medium mb-4">My information</p>
-            <UserInformation userData={userData} />
+            <UserInformation
+              userData={userData}
+              sectionVisibility={sectionVisibility}
+              handleSectionVisibility={handleSectionVisibility}
+            />
           </div>
           <div className="p-3">
             <p className="text-lg font-medium mb-4">Billing address</p>
-            <AddressInformation userData={userData} />
+            <AddressInformation
+              userData={userData}
+              sectionVisibitity={sectionVisibility}
+              handleSectionVisibility={handleSectionVisibility}
+            />
           </div>
           <div className="p-3">
             <p className="text-lg font-medium mb-4">View order details</p>
