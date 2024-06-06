@@ -1,6 +1,5 @@
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 import storageManager from "../../utils/storageManager";
-import { getCurrentDate } from "../../utils/dateHandler";
 
 const styles = StyleSheet.create({
   page: {
@@ -130,14 +129,19 @@ const ProductItem = ({ orderDetails, itemName, itemValue }) => {
   );
 };
 
-const Invoice = ({ userData, orderDetails, deliveryCharge, totalPrice }) => {
+const Invoice = ({
+  userData,
+  orderDetails,
+  deliveryCharge,
+  totalPrice,
+  formattedDate,
+  invoiceNo,
+}) => {
   const database = storageManager.loadFromLocalStorage("usersDb");
   const userDB = database.find((user) => user.id === userData.id);
   const userDetails = userDB.userDetails;
   const userAddress = userDetails.addresses[0];
 
-  const invoiceNo = Date.now();
-  const formattedDate = getCurrentDate(invoiceNo);
   return (
     <Document>
       <Page size="A4" style={styles.page}>

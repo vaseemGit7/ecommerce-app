@@ -1,7 +1,18 @@
 import { useRef, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import Invoice from "./pdfUtils/Invoice";
 
-const ConfirmModal = ({ dialogToggle, handleDialogToggle }) => {
+const ConfirmModal = ({
+  dialogToggle,
+  handleDialogToggle,
+  userData,
+  orderDetails,
+  deliveryCharge,
+  totalPrice,
+  formattedDate,
+  invoiceNo,
+}) => {
   const dialogModal = useRef(null);
 
   useEffect(() => {
@@ -28,9 +39,23 @@ const ConfirmModal = ({ dialogToggle, handleDialogToggle }) => {
               <p className="text-xl font-semibold text-neutral-900">
                 Thank you for your purchase!
               </p>
-              <button className="px-3 py-2 w-3/4 bg-neutral-800 font-medium text-neutral-50 rounded hover:drop-shadow-md">
-                Download Invoice
-              </button>
+              <PDFDownloadLink
+                document={
+                  <Invoice
+                    userData={userData}
+                    orderDetails={orderDetails}
+                    deliveryCharge={deliveryCharge}
+                    totalPrice={totalPrice}
+                    formattedDate={formattedDate}
+                    invoiceNo={invoiceNo}
+                  />
+                }
+                fileName={`Invoice_${userData.userDetails.fullName}_${invoiceNo}_${formattedDate}`}
+              >
+                <button className="px-3 py-2  bg-neutral-800 font-medium text-neutral-50 rounded hover:drop-shadow-md">
+                  Download Invoice
+                </button>
+              </PDFDownloadLink>
               <NavLink to="/dashboard/home">
                 <p
                   className="text-base font-medium hover:border-b-2 border-b-neutral-900 cursor-pointer"

@@ -19,6 +19,9 @@ const Checkout = () => {
     addressInformation: true,
   });
   const [dialogToggle, setDialogToggle] = useState(false);
+  const [orderDetails, setOrderDetails] = useState(null);
+  const [invoiceNo, setInvoiceNo] = useState(null);
+  const [formattedDate, setFormattedDate] = useState(null);
 
   const handleSectionVisibility = (section) => {
     setSectionVisiblity((prevState) => ({
@@ -33,9 +36,10 @@ const Checkout = () => {
 
   const handlePlaceOrder = () => {
     const unixDate = Date.now();
+    const formattedDate = getCurrentDate(unixDate);
     const updatedCartProducts = cartProduct.map((product) => ({
       ...product,
-      orderPlaced: getCurrentDate(unixDate),
+      orderPlaced: formattedDate,
     }));
 
     const database = storageManager.loadFromLocalStorage("usersDb");
@@ -53,6 +57,10 @@ const Checkout = () => {
 
     const updatedUsers = [...existingUsers, updatedUserDB];
     storageManager.saveToLocalStorage("usersDb", updatedUsers);
+
+    setOrderDetails(cartProduct);
+    setInvoiceNo(unixDate);
+    setFormattedDate(formattedDate);
 
     dispatch(removeAllProductFromCart());
     handleDialogToggle();
@@ -162,6 +170,12 @@ const Checkout = () => {
       <ConfirmModal
         dialogToggle={dialogToggle}
         handleDialogToggle={handleDialogToggle}
+        userData={userData}
+        orderDetails={orderDetails}
+        deliveryCharge={deliveryCharge}
+        totalPrice={totalPrice}
+        formattedDate={formattedDate}
+        invoiceNo={invoiceNo}
       />
     </div>
   );
