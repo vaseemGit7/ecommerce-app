@@ -6,8 +6,11 @@ import ProductLoading from "./ProductLoading";
 import Filterbar from "./Filterbar";
 import { useDispatch, useSelector } from "react-redux";
 import { setResultData } from "../actions/dataActions";
+import { useLocation } from "react-router-dom";
 
 const Home = () => {
+  const location = useLocation();
+  const { categoryCode } = location.state;
   const [products, setProducts] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [index, setIndex] = useState(1);
@@ -17,7 +20,7 @@ const Home = () => {
 
   const getProductsHM = async () => {
     try {
-      const data = await getHMProducts(0, 12, paramsState);
+      const data = await getHMProducts(0, 12, paramsState, categoryCode);
       dispatch(setResultData(data));
       setProducts(data.results);
     } catch (error) {
@@ -27,11 +30,11 @@ const Home = () => {
 
   useEffect(() => {
     getProductsHM();
-  }, [paramsState]);
+  }, [paramsState, categoryCode]);
 
   const fetchMoreData = async () => {
     try {
-      const data = await getHMProducts(index, 12, paramsState);
+      const data = await getHMProducts(index, 12, paramsState, categoryCode);
       dispatch(setResultData(data));
       setProducts((prevItems) => [...prevItems, ...data.results]);
       data.results.length > 0 ? setHasMore(true) : setHasMore(false);
@@ -43,7 +46,7 @@ const Home = () => {
   };
 
   return (
-    <div className="grid grid-cols-[max-content_4fr] gap-3">
+    <div className="relative grid grid-cols-[max-content_4fr] gap-3">
       <Filterbar />
       <InfiniteScroll
         dataLength={products.length}
