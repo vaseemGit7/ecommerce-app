@@ -15,11 +15,15 @@ const Filterbar = () => {
     return resultData?.facets?.find((item) => item.code === facetCode);
   };
 
+  const shouldShowFacet = (facet) => {
+    return facet.values.some((value) => value.count !== 0);
+  };
+
   const occasionFacet = getFacet("contexts");
   const conceptFacet = getFacet("concepts");
 
   return (
-    <div className="flex flex-col px-4 py-3 gap-10 text-neutral-50 font-semibold bg-neutral-700 rounded-lg">
+    <div className="h-screen sticky top-0 flex flex-col px-4 py-3 gap-10 text-neutral-50 font-semibold bg-neutral-700 rounded-lg">
       <p className="text-xl font-semibold self-center">Filters</p>
       <div>
         <p className="text-lg font-medium">Sort by</p>
@@ -76,8 +80,12 @@ const Filterbar = () => {
           </label>
         </div>
       </div>
-      <FilterOptions facetName={"Occasion"} facets={occasionFacet} />
-      <FilterOptions facetName={"Concept"} facets={conceptFacet} />
+      {shouldShowFacet(occasionFacet) && (
+        <FilterOptions facetName={"Occasion"} facets={occasionFacet} />
+      )}
+      {shouldShowFacet(conceptFacet) && (
+        <FilterOptions facetName={"Concept"} facets={conceptFacet} />
+      )}
     </div>
   );
 };
