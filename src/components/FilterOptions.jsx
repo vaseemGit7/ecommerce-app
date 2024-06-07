@@ -5,8 +5,12 @@ const FilterOptions = ({ facetName, facets }) => {
   const paramsData = useSelector((state) => state.paramsReducer);
   const dispatch = useDispatch();
 
-  const handleChange = (filter, e) => {
-    dispatch(setParam(filter, e.target.value));
+  const handleChange = (filter, value) => {
+    const currentValues = paramsData[filter] || [];
+    const updatedValues = currentValues.includes(value)
+      ? currentValues.filter((val) => val !== value)
+      : [...currentValues, value];
+    dispatch(setParam(filter, updatedValues));
   };
 
   return (
@@ -17,11 +21,14 @@ const FilterOptions = ({ facetName, facets }) => {
           <div key={option.code} className="flex justify-between">
             <label className="text-base font-normal cursor-pointer">
               <input
-                type="radio"
+                type="checkbox"
                 value={option.code}
-                checked={paramsData[facets.code] === option.code}
-                onChange={(e) => {
-                  handleChange(`${facets.code}`, e);
+                checked={
+                  Array.isArray(paramsData[facets.code]) &&
+                  paramsData[facets.code].includes(option.code)
+                }
+                onChange={() => {
+                  handleChange(`${facets.code}`, option.code);
                 }}
               />
               {option.code}
