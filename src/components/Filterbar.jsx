@@ -16,14 +16,17 @@ const Filterbar = () => {
   };
 
   const shouldShowFacet = (facet) => {
-    return facet.values.some((value) => value.count !== 0);
+    return facet?.values?.some((value) => value.count !== 0);
   };
 
   const occasionFacet = getFacet("contexts");
   const conceptFacet = getFacet("concepts");
+  const fitFacet = getFacet("fits");
+  const colorFacet = getFacet("colorWithNames");
+  const functionFacet = getFacet("functions");
 
   return (
-    <div className="h-screen sticky top-0 flex flex-col px-4 py-3 gap-10 text-neutral-50 font-semibold bg-neutral-700 rounded-lg">
+    <div className="h-screen sticky top-0 flex flex-col px-4 py-3 gap-10 text-neutral-50 font-semibold bg-neutral-700 rounded-lg  overflow-y-auto">
       <p className="text-xl font-semibold self-center">Filters</p>
       <div>
         <p className="text-lg font-medium">Sort by</p>
@@ -85,6 +88,15 @@ const Filterbar = () => {
       )}
       {shouldShowFacet(conceptFacet) && (
         <FilterOptions facetName={"Concept"} facets={conceptFacet} />
+      )}
+      {shouldShowFacet(fitFacet) && (
+        <FilterOptions facetName={"Fit"} facets={fitFacet} />
+      )}
+      {shouldShowFacet(colorFacet) && (
+        <FilterOptions facetName={"Color"} facets={colorFacet} />
+      )}
+      {shouldShowFacet(functionFacet) && (
+        <FilterOptions facetName={"Function"} facets={functionFacet} />
       )}
     </div>
   );
