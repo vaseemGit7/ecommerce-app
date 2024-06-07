@@ -17,25 +17,28 @@ const FilterOptions = ({ facetName, facets }) => {
     <div className="flex flex-col gap-1">
       <p className="text-lg font-medium">{facetName}</p>
       {facets &&
-        facets.values.map((option) => (
-          <div key={option.code} className="flex justify-between">
-            <label className="text-base font-normal cursor-pointer">
-              <input
-                type="checkbox"
-                value={option.code}
-                checked={
-                  Array.isArray(paramsData[facets.code]) &&
-                  paramsData[facets.code].includes(option.code)
-                }
-                onChange={() => {
-                  handleChange(`${facets.code}`, option.code);
-                }}
-              />
-              {option.code}
-            </label>
-            <p className="text-base font-normal">{option.count}</p>
-          </div>
-        ))}
+        facets.values.map(
+          (option) =>
+            option.count !== 0 && (
+              <div key={option.code} className="flex justify-between">
+                <label className="text-base font-normal cursor-pointer">
+                  <input
+                    type="checkbox"
+                    value={option.code}
+                    checked={
+                      Array.isArray(paramsData[facets.code]) &&
+                      paramsData[facets.code].includes(option.code)
+                    }
+                    onChange={() => {
+                      handleChange(`${facets.code}`, option.code);
+                    }}
+                  />
+                  {option.code}
+                </label>
+                <p className="text-base font-normal">{option.count}</p>
+              </div>
+            )
+        )}
     </div>
   );
 };
