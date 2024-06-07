@@ -33,7 +33,10 @@ const FilterOptions = ({ facetName, facets }) => {
                       handleChange(`${facets.code}`, option.code);
                     }}
                   />
-                  {option.code}
+                  {facetName === "Color"
+                    ? option.code.split("_")[0].charAt(0).toUpperCase() +
+                      option.code.split("_")[0].slice(1)
+                    : option.code}
                 </label>
                 <p className="text-base font-normal">{option.count}</p>
               </div>
