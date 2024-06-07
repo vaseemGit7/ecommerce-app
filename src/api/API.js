@@ -7,7 +7,7 @@ import axios from "axios";
 const rapidApiAxios = axios.create({
   baseURL: "https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com",
   headers: {
-    "X-RapidAPI-Key": "94876875d7mshe7c1cbc05508effp1d2569jsna270fe653dc2",
+    "X-RapidAPI-Key": "f65ee0d744msha0a5229ab0e83ccp1a3ca5jsn980d42dd8ba3",
     "X-RapidAPI-Host": "apidojo-hm-hennes-mauritz-v1.p.rapidapi.com",
   },
 });
@@ -60,7 +60,7 @@ const getOptionalParams = (paramsData) => {
   return optionalParams;
 };
 
-export const getHMProducts = (currentPage, limit, state) => {
+export const getHMProducts = (currentPage, limit, state, catergoryCode) => {
   const optionalParams = getOptionalParams(state);
 
   const params = {
@@ -68,7 +68,7 @@ export const getHMProducts = (currentPage, limit, state) => {
     lang: "en",
     currentpage: currentPage,
     pagesize: limit,
-    categories: "men_all",
+    categories: catergoryCode,
   };
 
   return rapidApiAxios
