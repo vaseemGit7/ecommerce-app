@@ -15,13 +15,35 @@ const Navbar = () => {
 
   return (
     <div className="flex justify-between px-4 py-3 bg-neutral-50 drop-shadow rounded-lg">
-      <div className="flex">
+      <div className="flex gap-3">
         <p className="text-xl font-semibold mr-3">AppName</p>
         <NavLink
           to="/dashboard/home"
+          state={{ categoryCode: "men_all" }}
           className=" text-neutral-900 font-medium text-lg hover:border-b-2 border-neutral-600  cursor-pointer"
         >
-          <p>Home</p>
+          <p>Men</p>
+        </NavLink>
+        <NavLink
+          to="/dashboard/home"
+          state={{ categoryCode: "ladies_all" }}
+          className=" text-neutral-900 font-medium text-lg hover:border-b-2 border-neutral-600  cursor-pointer"
+        >
+          <p>Women</p>
+        </NavLink>
+        <NavLink
+          to="/dashboard/home"
+          state={{ categoryCode: "kids_newbornbaby_viewall" }}
+          className=" text-neutral-900 font-medium text-lg hover:border-b-2 border-neutral-600  cursor-pointer"
+        >
+          <p>Baby</p>
+        </NavLink>
+        <NavLink
+          to="/dashboard/home"
+          state={{ categoryCode: "kids_all" }}
+          className=" text-neutral-900 font-medium text-lg hover:border-b-2 border-neutral-600  cursor-pointer"
+        >
+          <p>Kids</p>
         </NavLink>
       </div>
       <div className="flex gap-4">
