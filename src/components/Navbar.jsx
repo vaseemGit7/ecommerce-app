@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { setSearchQuery } from "../actions/filterActions";
 import { useRef } from "react";
+import { logOut } from "../actions/userActions";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -11,6 +12,11 @@ const Navbar = () => {
     if (e.key === "Enter") {
       dispatch(setSearchQuery(searchRef.current.value));
     }
+  };
+
+  const handleLogOut = () => {
+    dispatch(logOut());
+    alert("Logged out");
   };
 
   return (
@@ -66,6 +72,12 @@ const Navbar = () => {
             className=" text-neutral-900 font-medium text-lg hover:border-b-2 border-neutral-600  cursor-pointer"
           >
             <p>Profile</p>
+          </NavLink>
+          <NavLink
+            to="/"
+            className=" text-neutral-900 font-medium text-lg hover:border-b-2 border-neutral-600  cursor-pointer"
+          >
+            <p onClick={handleLogOut}>Logout</p>
           </NavLink>
         </div>
       </div>
