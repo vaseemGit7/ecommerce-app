@@ -6,6 +6,7 @@ import Profile from "../components/Profile";
 import ProductDetail from "../components/ProductDetail";
 import Cart from "../components/Cart";
 import Checkout from "../components/Checkout";
+import SessionExpired from "../components/SessionExpired";
 
 const routes = [
   {
@@ -17,6 +18,7 @@ const routes = [
     path: "/dashboard",
     name: "Dashboard",
     element: <LazyDashBoard />,
+    errorElement: <SessionExpired />,
     children: [
       { path: "home", name: "Home", element: <Home />, index: true },
       { path: "profile", name: "Profile", element: <Profile /> },
@@ -31,6 +33,6 @@ export default routes;
 
 function delayRoute(promise) {
   return new Promise((resolve) => {
-    setTimeout(resolve, 3500);
+    setTimeout(resolve, 1500);
   }).then(() => promise);
 }
