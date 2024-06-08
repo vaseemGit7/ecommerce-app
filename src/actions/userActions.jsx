@@ -1,4 +1,4 @@
-import { SET_USER } from "../reducers/userReducer";
+import { REMOVE_USER, SET_USER } from "../reducers/userReducer";
 import {
   ADD_PRODUCT_CART,
   DECREASE_PRODUCT_QUANTITY,
@@ -10,6 +10,10 @@ import { REMOVE_PRODUCT_CART } from "../reducers/cartReducer";
 export const setUser = (userData) => ({
   type: SET_USER,
   payload: userData,
+});
+
+export const logOut = () => ({
+  type: REMOVE_USER,
 });
 
 export const addProductToCart = (product) => ({
