@@ -11,7 +11,7 @@ const AddressInformation = ({
 }) => {
   const database = storageManager.loadFromLocalStorage("usersDb");
   const userDB = database.find((user) => user.id === userData.id);
-  const userAddress = userDB.userDetails.addresses[0];
+  const userAddress = userDB?.userDetails?.addresses?.[0];
 
   const getUniqueId = () => {
     const uniqueId = uuid();
@@ -50,7 +50,7 @@ const AddressInformation = ({
 
   return (
     <>
-      {sectionVisibility["addressInformation"] && userAddress.streetAddress ? (
+      {sectionVisibility["addressInformation"] && userAddress?.streetAddress ? (
         <div className="flex justify-between bg-slate-200 p-2 rounded">
           <div className="flex flex-col gap-1 text-sm font-medium text-neutral-800">
             <p>{userDB.userDetails.fullName}</p>
@@ -71,11 +71,11 @@ const AddressInformation = ({
       ) : (
         <Formik
           initialValues={{
-            streetAddress: userAddress.streetAddress || "",
-            flatAddress: userAddress.flatAddress || "",
-            town: userAddress.town || "",
-            pincode: userAddress.pincode || "",
-            state: userAddress.state || "",
+            streetAddress: userAddress?.streetAddress || "",
+            flatAddress: userAddress?.flatAddress || "",
+            town: userAddress?.town || "",
+            pincode: userAddress?.pincode || "",
+            state: userAddress?.state || "",
           }}
           validationSchema={addressInfoValidationSchema}
           onSubmit={(values) => handleSubmission(values)}
