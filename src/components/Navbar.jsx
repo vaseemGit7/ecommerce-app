@@ -21,8 +21,8 @@ const Navbar = () => {
 
   return (
     <div className="flex justify-between px-4 py-3 bg-neutral-50 drop-shadow rounded-lg">
-      <div className="flex gap-3">
-        <p className="text-xl font-semibold mr-3">AppName</p>
+      <div className="flex items-center gap-3">
+        <img className="h-7 mr-3" src="./src/assets/logo.svg" />
         <NavLink
           to="/dashboard/home"
           state={{ categoryCode: "men_all" }}
