@@ -89,18 +89,14 @@ const LoginPage = () => {
 
   return (
     <div
-      className="h-full grid place-items-center"
+      className="login-bg h-full grid place-items-center"
       style={{
-        background: `linear-gradient(
-        231deg,
-        #f4ddff -3.91%,
-        #cdd5ef 39.6%,
-        #ffdcdc 67.65%,
-        #bdeee5 106%
-      )`,
+        backgroundImage: "url('./src/assets/login-bg.jpg')",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
       }}
     >
-      <div className="grid grid-cols-2 p-2 bg-neutral-200/50 bg-opa rounded-xl drop-shadow-lg">
+      <div className="z-10 grid grid-cols-2 p-2 bg-neutral-200/75 bg-opa rounded-xl drop-shadow-lg">
         <div
           className="m-3 bg-cover bg-center rounded-lg"
           style={{ backgroundImage: "url('./src/assets/login-bg-image.jpeg')" }}
