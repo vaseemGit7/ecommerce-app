@@ -99,7 +99,7 @@ const LoginPage = () => {
       <div className="z-10 grid grid-cols-2 p-2 bg-neutral-200/75 bg-opa rounded-xl drop-shadow-lg">
         <div
           className="m-3 bg-cover bg-center rounded-lg"
-          style={{ backgroundImage: "url('./src/assets/login-bg-image.jpeg')" }}
+          style={{ backgroundImage: "url('./src/assets/login-card.jpeg')" }}
         ></div>
         <div className=" mx-12 my-24 py-16 ">
           {isNewAccount ? (
