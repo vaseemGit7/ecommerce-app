@@ -1,5 +1,21 @@
-import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
+import {
+  Page,
+  Text,
+  View,
+  Document,
+  Font,
+  StyleSheet,
+} from "@react-pdf/renderer";
 import storageManager from "../../utils/storageManager";
+
+Font.register({
+  family: "Yesteryear",
+  fonts: [
+    {
+      src: "https://fonts.gstatic.com/s/yesteryear/v18/dg4g_p78rroaKl8kRKo1r7wHTwonmyw.ttf",
+    },
+  ],
+});
 
 const styles = StyleSheet.create({
   page: {
@@ -10,6 +26,11 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     gap: "15px",
     padding: "10px",
+  },
+  logo: {
+    fontFamily: "Yesteryear",
+    fontSize: "24px",
+    color: "#DC2626",
   },
   headerSection: {
     display: "flex",
@@ -147,7 +168,7 @@ const Invoice = ({
       <Page size="A4" style={styles.page}>
         <View style={styles.content}>
           <View style={styles.headerSection}>
-            <Text style={styles.titleText}>AppName</Text>
+            <Text style={styles.logo}>Stellario</Text>
             <Text style={styles.titleText}>Invoice</Text>
           </View>
           <View style={styles.headerSection}>
