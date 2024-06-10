@@ -24,28 +24,28 @@ const Navbar = () => {
       <div className="flex items-center gap-3">
         <img className="h-7 mr-3" src="./src/assets/logo.svg" />
         <NavLink
-          to="/dashboard/home"
+          to="/dashboard/menu"
           state={{ categoryCode: "men_all" }}
           className=" text-neutral-900 font-medium text-lg hover:border-b-2 border-neutral-600  cursor-pointer"
         >
           <p>Men</p>
         </NavLink>
         <NavLink
-          to="/dashboard/home"
+          to="/dashboard/menu"
           state={{ categoryCode: "ladies_all" }}
           className=" text-neutral-900 font-medium text-lg hover:border-b-2 border-neutral-600  cursor-pointer"
         >
           <p>Women</p>
         </NavLink>
         <NavLink
-          to="/dashboard/home"
+          to="/dashboard/menu"
           state={{ categoryCode: "kids_newbornbaby_viewall" }}
           className=" text-neutral-900 font-medium text-lg hover:border-b-2 border-neutral-600  cursor-pointer"
         >
           <p>Baby</p>
         </NavLink>
         <NavLink
-          to="/dashboard/home"
+          to="/dashboard/menu"
           state={{ categoryCode: "kids_all" }}
           className=" text-neutral-900 font-medium text-lg hover:border-b-2 border-neutral-600  cursor-pointer"
         >

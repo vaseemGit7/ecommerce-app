@@ -1,12 +1,13 @@
 import { lazy } from "react";
 import LoginPage from "../components/LoginPage";
 const LazyDashBoard = lazy(() => delayRoute(import("../components/Dashboard")));
-import Home from "../components/Home";
+// import Home from "../components/Home";
 import Profile from "../components/Profile";
 import ProductDetail from "../components/ProductDetail";
 import Cart from "../components/Cart";
 import Checkout from "../components/Checkout";
 import SessionExpired from "../components/SessionExpired";
+import Menu from "../components/Menu";
 
 const routes = [
   {
@@ -20,7 +21,8 @@ const routes = [
     element: <LazyDashBoard />,
     errorElement: <SessionExpired />,
     children: [
-      { path: "home", name: "Home", element: <Home />, index: true },
+      // { path: "home", name: "Home", element: <Home />, index: true },
+      { path: "menu", name: "Menu", element: <Menu /> },
       { path: "profile", name: "Profile", element: <Profile /> },
       { path: "product/:id", element: <ProductDetail /> },
       { path: "cart", name: "Cart", element: <Cart /> },
