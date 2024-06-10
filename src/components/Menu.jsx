@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setResultData } from "../actions/dataActions";
 import { useLocation } from "react-router-dom";
 
-const Home = () => {
+const Menu = () => {
   const location = useLocation();
   const { categoryCode } = location.state;
   const [products, setProducts] = useState([]);
@@ -74,4 +74,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Menu;
