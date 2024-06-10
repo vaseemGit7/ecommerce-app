@@ -51,7 +51,7 @@ const Home = () => {
           {carouselDots}
         </div>
       </div>
-      <div className="mt-2 p-4 flex justify-evenly">
+      <div className="p-4 flex justify-evenly">
         <div className="w-1/4 p-4 flex flex-col items-start gap-1 outline outline-1 outline-neutral-300 bg-neutral-200/50">
           <p className="text-lg font-semibold text-neutral-900">
             Quality Products
@@ -118,6 +118,27 @@ const Home = () => {
             Grab it now!
           </button>
         </div>
+      </div>
+      <div className="w-1/2 m-4 self-center flex flex-col items-center gap-4">
+        <p className="text-3xl text-center font-semibold text-balance text-neutral-800">
+          Subscribe to our newsletter to get updates on our latest collections
+        </p>
+        <p className="text-base font-medium text-neutral-600">
+          Get 20% off on your first order just by subscribing to our newsletter
+        </p>
+        <div className="flex gap-2">
+          <input
+            className="border-2 border-neutral-300 px-2 py-1 rounded bg-neutral-200 text-neutral-800"
+            type="email"
+            placeholder="Enter your email"
+          ></input>
+          <button className="px-2 py-1 bg-neutral-800 text-neutral-50 font-medium text-base rounded">
+            Subscribe
+          </button>
+        </div>
+        <p className="text-sm font-normal text-neutral-500">
+          You will be able to unsubscribe at anytime
+        </p>
       </div>
     </div>
   );
