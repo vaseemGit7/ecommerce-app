@@ -5,10 +5,10 @@ const ProductLoading = () => {
     skeletonCards.push(
       <div
         key={i}
-        className="h-96 flex flex-col gap-1 p-2 bg-slate-50 text-neutral-900 rounded hover: drop-shadow-md hover:scale-105"
+        className="h-[31rem] flex flex-col justify-between gap-1 outline outline-1 outline-neutral-200 bg-slate-50 rounded-sm"
       >
         <div className="animate-pulse h-5/6 bg-neutral-300"></div>
-        <div className="flex flex-col justify-between">
+        <div className="flex flex-col justify-between p-2">
           <div className="animate-pulse h-4 w-5/6 mt-2 bg-neutral-300 rounded"></div>
           <div className="animate-pulse h-4 w-1/5 mt-2 bg-neutral-300 rounded"></div>
         </div>
@@ -20,9 +20,9 @@ const ProductLoading = () => {
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
-        gap: "30px",
-        marginTop: "30px",
+        gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
+        gap: "10px",
+        marginTop: "10px",
       }}
     >
       {skeletonCards}
