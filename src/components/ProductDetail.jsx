@@ -9,6 +9,7 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [currentVariant, setCurrentVariant] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
+  const [sizeError, setSizeError] = useState(false);
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const hasFetched = useRef(false);
@@ -57,71 +58,78 @@ const ProductDetail = () => {
   }
 
   const addProduct = () => {
-    dispatch(addProductToCart(productData));
-    alert(`${productData.name} is added to cart`);
+    selectedSize === null ? setSizeError(true) : setSizeError(false);
+    if (selectedSize !== null) {
+      dispatch(addProductToCart(productData));
+      alert(`${productData.name} is added to cart`);
+    }
   };
 
   console.log(product);
   console.log(currentVariant);
 
   return (
-    <div
-      className={`grid items-start mx-28 ${
-        loading ? "h-screen" : "justify-center"
-      }`}
-    >
+    <div className={`grid mx-28 ${loading ? "h-screen" : "justify-center"}`}>
       {loading ? (
         <DetailLoading />
       ) : (
-        <div className="grid grid-cols-2 p-7 justify-items-center bg-slate-100  text-neutral-800 rounded">
+        <div className="grid grid-cols-2 p-7 justify-items-center bg-neutral-50 outline outline-1 outline-neutral-200  text-neutral-800 rounded">
           <div className="w-5/6">
             <img
               className="rounded"
               src={currentVariant?.galleryDetails[0]?.baseUrl}
             />
           </div>
-          <div className="p-5 flex flex-col gap-2 ">
-            <p className="text-xl font-semibold">{product.name}</p>
-            <p className="text-lg font-medium">₹{product.whitePrice.price}</p>
-            <p className="text-base font-medium">
+          <div className="p-5 flex flex-col gap-2 overflow-y-scroll">
+            <div>
+              <p className="text-xl font-semibold">{product.name}</p>
+              <p className="text-lg font-medium">₹{product.whitePrice.price}</p>
+            </div>
+            <p className="text-base font-medium text-neutral-700">
               {currentVariant?.colourDescription}
             </p>
-            <div className="flex h-1/5 gap-2 p-2 overflow-x-auto">
+            <div className="flex h-60 gap-2 p-2 overflow-x-scroll">
               {product &&
                 product.articlesList.map((item) => (
-                  <div
-                    className={`flex items-center justify-center cursor-pointer hover:drop-shadow rounded ${
-                      currentVariant?.code === item.code
-                        ? "outline outline-neutral-500"
-                        : ""
-                    }`}
+                  <img
                     key={item.code}
+                    src={item?.galleryDetails[0]?.baseUrl}
+                    className={`cursor-pointer outline outline-1 hover:outline-neutral-500 rounded ${
+                      currentVariant?.code === item.code
+                        ? "outline-neutral-700"
+                        : "outline-neutral-300"
+                    }`}
                     onClick={() => handleVariantSelection(item.code)}
-                  >
-                    <img
-                      className="h-full"
-                      src={item?.galleryDetails[0]?.baseUrl}
-                    />
-                  </div>
+                  />
                 ))}
             </div>
             <p className="text-base font-medium">SIZES</p>
+            {sizeError && (
+              <p className="text-sm text-red-600 font-normal">
+                *Please select a size
+              </p>
+            )}
             <div className="flex gap-2">
               {currentVariant &&
                 currentVariant.variantsList.map((item) => (
                   <div
-                    className={`p-2 w-1/5 text-center text-sm font-medium border-2 border-neutral-400 hover:bg-neutral-200 ${
-                      selectedSize === item.size.name ? "bg-neutral-300" : ""
+                    className={`p-2 w-1/5 text-center text-sm font-medium outline outline-1 outline-neutral-400 rounded-sm hover:scale-[1.04] hover:shadow-md cursor-pointer ${
+                      selectedSize === item.size.name
+                        ? "bg-neutral-300 scale-[1.04]"
+                        : ""
                     }`}
                     key={item.code}
-                    onClick={() => setSelectedSize(item.size.name)}
+                    onClick={() => {
+                      setSelectedSize(item.size.name);
+                      setSizeError(false);
+                    }}
                   >
                     {item.size.name}
                   </div>
                 ))}
             </div>
             <button
-              className="py-2 px-3 w-3/5 text-center align-middle bg-neutral-800 text-base text-neutral-50 font-normal rounded"
+              className="mt-2 py-2 px-3 w-3/5 text-center self-center text-base font-medium text-neutral-50 bg-neutral-700 rounded hover:bg-neutral-800"
               onClick={addProduct}
             >
               Add
