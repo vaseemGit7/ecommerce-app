@@ -27,7 +27,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="grid grid-cols-3 justify-between items-center px-4 py-3 bg-neutral-50 drop-shadow rounded-lg">
+    <div className="grid grid-cols-3 sticky top-0 z-10 justify-between items-center px-4 py-3 bg-neutral-50 drop-shadow rounded-lg">
       <div className="flex items-center gap-3 justify-self-start">
         <NavLink
           to="/dashboard/menu"

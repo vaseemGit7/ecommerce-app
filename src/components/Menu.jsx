@@ -46,7 +46,7 @@ const Menu = () => {
   };
 
   return (
-    <div className="relative grid grid-cols-[max-content_4fr] gap-3">
+    <div className="relative grid grid-cols-[1fr_6fr] gap-3">
       <Filterbar />
       <InfiniteScroll
         dataLength={products.length}
