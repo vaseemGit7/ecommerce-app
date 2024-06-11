@@ -57,9 +57,10 @@ const Menu = () => {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
-            gap: "30px",
+            gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
+            gap: "10px",
           }}
+          className="p-1"
         >
           {products &&
             products.map((product) => (
