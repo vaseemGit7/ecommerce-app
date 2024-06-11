@@ -1,7 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setParam } from "../actions/filterActions";
+import { IonIcon } from "@ionic/react";
+import { chevronDownOutline, chevronUpOutline } from "ionicons/icons";
 
-const FilterOptions = ({ facetName, facets }) => {
+const FilterOptions = ({
+  facetName,
+  facets,
+  handleFacetToggle,
+  toggleFacet,
+}) => {
   const paramsData = useSelector((state) => state.paramsReducer);
   const dispatch = useDispatch();
 
@@ -15,8 +22,17 @@ const FilterOptions = ({ facetName, facets }) => {
 
   return (
     <div className="flex flex-col gap-1">
-      <p className="text-lg font-medium">{facetName}</p>
+      <div
+        className="flex justify-between items-center"
+        onClick={() => handleFacetToggle(facetName)}
+      >
+        <p className="text-lg font-medium">{facetName}</p>
+        <IonIcon
+          icon={toggleFacet[facetName] ? chevronUpOutline : chevronDownOutline}
+        ></IonIcon>
+      </div>
       {facets &&
+        toggleFacet[facetName] &&
         facets.values.map(
           (option) =>
             option.count !== 0 && (
