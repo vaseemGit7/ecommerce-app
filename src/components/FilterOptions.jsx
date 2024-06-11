@@ -21,12 +21,12 @@ const FilterOptions = ({
   };
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-3">
       <div
-        className="flex justify-between items-center"
+        className="flex justify-between items-center cursor-pointer"
         onClick={() => handleFacetToggle(facetName)}
       >
-        <p className="text-lg font-medium">{facetName}</p>
+        <p className="text-base font-medium">{facetName}</p>
         <IonIcon
           icon={toggleFacet[facetName] ? chevronUpOutline : chevronDownOutline}
         ></IonIcon>
@@ -36,10 +36,14 @@ const FilterOptions = ({
         facets.values.map(
           (option) =>
             option.count !== 0 && (
-              <div key={option.code} className="flex justify-between">
-                <label className="text-base font-normal cursor-pointer">
+              <div
+                key={option.code}
+                className="flex justify-between items-center gap-1"
+              >
+                <label className="flex items-center gap-2 text-base font-normal cursor-pointer">
                   <input
                     type="checkbox"
+                    className="h-4 w-4 rounded-sm accent-neutral-800"
                     value={option.code}
                     checked={
                       Array.isArray(paramsData[facets.code]) &&
@@ -54,7 +58,9 @@ const FilterOptions = ({
                       option.code.split("_")[0].slice(1)
                     : option.code}
                 </label>
-                <p className="text-base font-normal">{option.count}</p>
+                <p className="text-base font-normal text-neutral-600">
+                  {option.count}
+                </p>
               </div>
             )
         )}
