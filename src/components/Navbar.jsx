@@ -6,7 +6,7 @@ import { logOut } from "../actions/userActions";
 import { IonIcon } from "@ionic/react";
 import {
   bagOutline,
-  colorFillOutline,
+  exitOutline,
   personOutline,
   searchOutline,
 } from "ionicons/icons";
@@ -27,9 +27,8 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex justify-between px-4 py-3 bg-neutral-50 drop-shadow rounded-lg">
-      <div className="flex items-center gap-3">
-        <img className="h-7 mr-3" src="../src/assets/logo.svg" />
+    <div className="grid grid-cols-3 justify-between items-center px-4 py-3 bg-neutral-50 drop-shadow rounded-lg">
+      <div className="flex items-center gap-3 justify-self-start">
         <NavLink
           to="/dashboard/menu"
           state={{ categoryCode: "men_all" }}
@@ -59,7 +58,10 @@ const Navbar = () => {
           <p>Kids</p>
         </NavLink>
       </div>
-      <div className="flex gap-4">
+      <NavLink to="/dashboard/home" className="place-self-center">
+        <img className="h-9" src="../src/assets/logo.svg" />
+      </NavLink>
+      <div className="flex gap-4 justify-self-end">
         <div className="relative">
           <input
             ref={searchRef}
@@ -86,12 +88,16 @@ const Navbar = () => {
           >
             <IonIcon icon={personOutline} className="text-xl"></IonIcon>
           </NavLink>
-          {/* <NavLink
+          <NavLink
             to="/"
-            className=" text-neutral-900 font-medium text-lg hover:border-b-2 border-neutral-600  cursor-pointer"
+            className="flex items-center text-neutral-900 font-medium text-lg hover:border-b-2 border-neutral-600  cursor-pointer"
           >
-            <p onClick={handleLogOut}>Logout</p>
-          </NavLink> */}
+            <IonIcon
+              icon={exitOutline}
+              className="text-xl"
+              onClick={handleLogOut}
+            ></IonIcon>
+          </NavLink>
         </div>
       </div>
     </div>
