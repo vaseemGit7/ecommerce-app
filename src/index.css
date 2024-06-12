@@ -13,11 +13,16 @@ body {
 }
 
 body {
-  background-color: #f9fafb;
+  background-color: #faf9f8;
 }
 
 #root {
   height: 100%;
+}
+
+.toastify-message {
+  outline: 1px solid #d4d4d4;
+  font-size: medium;
 }
 
 .login-bg::after {
@@ -27,4 +32,22 @@ body {
   height: 100%;
   backdrop-filter: blur(10px);
   pointer-events: none;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d4d4d4;
+  border-radius: 100px;
+  margin: 0px 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
 }
