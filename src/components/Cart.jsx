@@ -6,6 +6,8 @@ import {
   removeProductFromCart,
 } from "../actions/userActions";
 import { NavLink } from "react-router-dom";
+import { IonIcon } from "@ionic/react";
+import { trash, trashOutline } from "ionicons/icons";
 
 const Cart = () => {
   const cartProduct = useSelector((state) => state.cartReducer);
@@ -13,6 +15,7 @@ const Cart = () => {
   const [orderValue, setOrderValue] = useState(0);
   const [deliveryCharge, setDeliveryCharge] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [icon, setIcon] = useState(trashOutline);
 
   useEffect(() => {
     const calculateOrderValue = () => {
@@ -44,6 +47,12 @@ const Cart = () => {
     dispatch(decreaseProductQuantity(id));
   };
 
+  const handleNext = (e) => {
+    if (cartProduct.length === 0) {
+      e.preventDefault();
+    }
+  };
+
   console.log(cartProduct);
   return (
     <div className="mx-28">
@@ -56,7 +65,7 @@ const Cart = () => {
               in your bag
             </p>
           </div>
-          <div className="flex flex-col bg-slate-100 p-3  rounded-md">
+          <div className="flex flex-col bg-neutral-50 outline outline-1 outline-neutral-200 p-3 rounded-md">
             {cartProduct.length > 0 ? (
               cartProduct.map((product) => (
                 <div
@@ -105,10 +114,15 @@ const Cart = () => {
                     </div>
                   </div>
                   <button
-                    className="px-1  bg-red-500 self-start text-neutral-50 rounded"
+                    className="self-start text-neutral-50 rounded"
                     onClick={() => handleRemoveProduct(product.id)}
                   >
-                    D
+                    <IonIcon
+                      icon={icon}
+                      onMouseEnter={() => setIcon(trash)}
+                      onMouseLeave={() => setIcon(trashOutline)}
+                      className=" text-red-600 text-xl"
+                    />
                   </button>
                 </div>
               ))
@@ -120,8 +134,8 @@ const Cart = () => {
           </div>
         </div>
         <div className="mt-2 p-3">
-          <div className="flex flex-col bg-slate-100 p-3 rounded-md">
-            <div className="flex justify-between pb-3 border-b-2 border-neutral-500">
+          <div className="flex flex-col bg-neutral-50 text-neutral-800 outline outline-1 outline-neutral-200 p-3 rounded-md">
+            <div className="flex justify-between pb-3 border-b-2 border-neutral-400">
               <div>
                 <p className=" text-base font-normal">Order value</p>
                 <p className=" text-base font-normal">Delivery charges</p>
@@ -140,10 +154,14 @@ const Cart = () => {
             <NavLink
               to="/dashboard/checkout"
               state={{ deliveryCharge, totalPrice }}
+              className={`self-center w-3/5 py-2 px-3 mt-3 text-center align-middle text-base text-neutral-50 font-medium rounded ${
+                cartProduct.length > 0
+                  ? "bg-neutral-700 hover:bg-neutral-800 hover:shadow-lg"
+                  : "bg-neutral-500 cursor-default"
+              }`}
+              onClick={handleNext}
             >
-              <button className="py-2 px-3 self-center w-3/5 mt-3 text-center align-middle bg-neutral-800 text-base text-neutral-50 font-normal rounded hover:drop-shadow-lg">
-                Checkout
-              </button>
+              Checkout
             </NavLink>
           </div>
         </div>
