@@ -30,7 +30,7 @@ const ConfirmModal = ({
   return (
     <>
       {dialogToggle && (
-        <div className="fixed inset-0 bg-neutral-600 bg-opacity-50 backdrop-filter backdrop-blur-sm">
+        <div className="fixed inset-10 bg-neutral-600 bg-opacity-50 backdrop-filter backdrop-blur-sm">
           <dialog
             className="relative top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border-none p-3 rounded-lg"
             ref={dialogModal}
@@ -52,7 +52,7 @@ const ConfirmModal = ({
                 }
                 fileName={`Invoice_${userData.userDetails.fullName}_${invoiceNo}_${formattedDate}`}
               >
-                <button className="px-3 py-2  bg-neutral-800 font-medium text-neutral-50 rounded hover:drop-shadow-md">
+                <button className="px-3 py-2 bg-neutral-700 font-medium text-neutral-50 rounded hover:bg-neutral-800 hover:shadow-md">
                   Download Invoice
                 </button>
               </PDFDownloadLink>
