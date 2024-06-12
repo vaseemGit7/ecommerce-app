@@ -53,7 +53,7 @@ const LoginPage = () => {
       ) {
         setValidUser(true);
         dispatch(setUser(user));
-        navigate("/dashboard");
+        navigate("/dashboard/home");
         return;
       } else {
         setValidUser(false);

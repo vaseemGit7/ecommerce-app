@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
               {product.price.formattedValue}
             </p>
             <div className="flex gap-2">
-              {product.rgbColors.map((color) => (
+              {product?.rgbColors?.map((color) => (
                 <div
                   key={color}
                   className="h-[0.625rem] w-[0.625rem] rounded-full outline outline-[0.5px] outline-neutral-800/25"
