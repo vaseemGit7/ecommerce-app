@@ -15,8 +15,6 @@ const Profile = () => {
     setActiveSection(section);
   };
 
-  console.log(userData.userDetails);
-
   return (
     <div className="grid grid-rows-[max-content_4fr]">
       <div className="flex gap-2 p-5 place-self-center text-lg font-medium">
@@ -41,9 +39,9 @@ const Profile = () => {
           Order History
         </button>
       </div>
-      {activeSection === "profileOverview" ? (
+      {activeSection === "profileOverview" && (
         <div className="w-3/6 place-self-center">
-          <div className="p-3 bg-slate-100 rounded mb-3 ">
+          <div className="p-3 bg-neutral-50 outline outline-1 outline-neutral-200 rounded mb-3 ">
             <p className="text-lg font-medium mb-2">My details</p>
             <div className="flex flex-col gap-2">
               <div className="flex flex-col">
@@ -72,7 +70,7 @@ const Profile = () => {
               </div>
             </div>
           </div>
-          <div className="p-3 bg-slate-100 rounded">
+          <div className="p-3 bg-neutral-50 outline outline-1 outline-neutral-200 rounded">
             <p className="text-lg font-medium mb-2">Addresses</p>
             <div>
               <p className="text-base font-normal">{userAddress.flatAddress}</p>
@@ -85,24 +83,29 @@ const Profile = () => {
             </div>
           </div>
         </div>
-      ) : (
+      )}
+      {activeSection === "orderHistory" && (
         <div className="w-3/6 place-self-center">
-          <div className="p-3 flex flex-col gap-2 items-center bg-slate-100 rounded mb-3">
+          <div className="p-3 flex flex-col gap-2 items-center bg-neutral-50 outline outline-1 outline-neutral-200 rounded mb-3">
             {[...userDetails.orderHistory].reverse().map((product) => (
               <div
                 key={product.id}
-                className="w-5/6 p-2 grid grid-cols-[1fr_4fr] outline outline-2 outline-neutral-500 rounded bg-neutral-50"
+                className="w-5/6 p-2 grid grid-cols-[1fr_4fr] outline outline-1 outline-neutral-400 rounded bg-neutral-50"
               >
                 <img className="rounded" src={product.image} />
                 <div className="p-2 flex flex-col justify-between text-neutral-800">
                   <p className="text-lg font-semibold">{product.name}</p>
+                  <div className="flex gap-1">
+                    <p className="text-base font-semibold">Price : </p>
+                    <p className="text-base font-semibold">₹ {product.price}</p>
+                  </div>
                   <>
                     <div className="flex justify-between">
                       <div className="flex flex-col gap-2">
                         <div className="flex gap-1">
-                          <p className="text-sm font-medium">Price : </p>
+                          <p className="text-sm font-medium">Total Price : </p>
                           <p className="text-sm font-medium">
-                            ₹ {product.price}
+                            ₹ {product.price * product.quantity}
                           </p>
                         </div>
                         <div className="flex gap-1">
