@@ -2,6 +2,8 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import DataInput from "./DataInput";
 import storageManager from "../../utils/storageManager";
+import { IonIcon } from "@ionic/react";
+import { createOutline } from "ionicons/icons";
 
 const UserInformation = ({
   userData,
@@ -37,7 +39,7 @@ const UserInformation = ({
   return (
     <>
       {sectionVisibility.userInformation && userDetails.fullName ? (
-        <div className="flex justify-between bg-slate-200 p-2 rounded">
+        <div className="flex justify-between bg-neutral-100 outline outline-1 outline-neutral-200 p-2 rounded">
           <div className="flex flex-col gap-1">
             <p className="text-sm font-medium text-neutral-800">
               {userDetails.fullName}
@@ -50,7 +52,7 @@ const UserInformation = ({
             className="px-1  bg-neutral-50 self-start text-neutral-800 cursor-pointer rounded"
             onClick={() => handleSectionVisibility("userInformation")}
           >
-            E
+            <IonIcon icon={createOutline} className="text-xl" />
           </p>
         </div>
       ) : (

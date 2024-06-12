@@ -3,6 +3,8 @@ import * as Yup from "yup";
 import { v4 as uuid } from "uuid";
 import DataInput from "./DataInput";
 import storageManager from "../../utils/storageManager";
+import { IonIcon } from "@ionic/react";
+import { createOutline } from "ionicons/icons";
 
 const AddressInformation = ({
   userData,
@@ -51,7 +53,7 @@ const AddressInformation = ({
   return (
     <>
       {sectionVisibility["addressInformation"] && userAddress?.streetAddress ? (
-        <div className="flex justify-between bg-slate-200 p-2 rounded">
+        <div className="flex justify-between bg-neutral-100 outline outline-1 outline-neutral-200  p-2 rounded">
           <div className="flex flex-col gap-1 text-sm font-medium text-neutral-800">
             <p>{userDB.userDetails.fullName}</p>
             <p className="mb-1">{userDB.userDetails.phoneNumber}</p>
@@ -65,7 +67,7 @@ const AddressInformation = ({
             className="px-1  bg-neutral-50 self-start text-neutral-800 cursor-pointer rounded"
             onClick={() => handleSectionVisibility("addressInformation")}
           >
-            E
+            <IonIcon icon={createOutline} className="text-xl" />
           </p>
         </div>
       ) : (
@@ -83,7 +85,7 @@ const AddressInformation = ({
           {(formik) => (
             <form
               onSubmit={formik.handleSubmit}
-              className="flex flex-col justify-start gap-2"
+              className="flex flex-col  justify-start gap-2"
             >
               <div className="flex flex-col gap-1">
                 <p className="text-sm font-medium text-neutral-800">Name</p>
