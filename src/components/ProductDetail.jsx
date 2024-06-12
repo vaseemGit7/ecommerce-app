@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { getProductDetail } from "../api/API";
 import { useDispatch } from "react-redux";
+import { toast, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { addProductToCart } from "../actions/userActions";
 import DetailLoading from "./DetailLoading";
 
@@ -61,7 +63,17 @@ const ProductDetail = () => {
     selectedSize === null ? setSizeError(true) : setSizeError(false);
     if (selectedSize !== null) {
       dispatch(addProductToCart(productData));
-      alert(`${productData.name} is added to cart`);
+      toast.success(`${productData.name} is added to cart`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        progress: undefined,
+        theme: "light",
+        className: "toastify-message",
+        transition: Bounce,
+      });
     }
   };
 
