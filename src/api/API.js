@@ -3,7 +3,7 @@ import axios from "axios";
 const rapidApiAxios = axios.create({
   baseURL: "https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com",
   headers: {
-    "X-RapidAPI-Key": "f65ee0d744msha0a5229ab0e83ccp1a3ca5jsn980d42dd8ba3",
+    "X-RapidAPI-Key": import.meta.env.VITE_REACT_API_KEY,
     "X-RapidAPI-Host": "apidojo-hm-hennes-mauritz-v1.p.rapidapi.com",
   },
 });
