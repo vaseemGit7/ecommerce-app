@@ -28,6 +28,7 @@ const Checkout = () => {
   const database = storageManager.loadFromLocalStorage("usersDb");
   const userDB = database.find((user) => user.id === userData.id);
   const userDetails = userDB.userDetails;
+  const userAddress = userDB?.userDetails?.addresses?.[0];
 
   const handleSectionVisibility = (section) => {
     setSectionVisiblity((prevState) => ({
@@ -108,11 +109,32 @@ const Checkout = () => {
           </div>
           <div className="p-3">
             <p className="text-lg font-medium mb-4">Billing address</p>
-            <AddressInformation
-              userData={userData}
-              sectionVisibility={sectionVisibility}
-              handleSectionVisibility={handleSectionVisibility}
-            />
+            {sectionVisibility["addressInformation"] &&
+            userAddress?.streetAddress ? (
+              <div className="flex justify-between bg-neutral-100 outline outline-1 outline-neutral-200  p-2 rounded">
+                <div className="flex flex-col gap-1 text-sm font-medium text-neutral-800">
+                  <p>{userDB.userDetails.fullName}</p>
+                  <p className="mb-1">{userDB.userDetails.phoneNumber}</p>
+                  <p>{userAddress.flatAddress}</p>
+                  <p>{userAddress.streetAddress}</p>
+                  <p>{userAddress.town}</p>
+                  <p>{userAddress.state}</p>
+                  <p>{userAddress.pincode}</p>
+                </div>
+                <p
+                  className="px-1  bg-neutral-50 self-start text-neutral-800 cursor-pointer rounded"
+                  onClick={() => handleSectionVisibility("addressInformation")}
+                >
+                  <IonIcon icon={createOutline} className="text-xl" />
+                </p>
+              </div>
+            ) : (
+              <AddressInformation
+                userData={userData}
+                sectionVisibility={sectionVisibility}
+                handleSectionVisibility={handleSectionVisibility}
+              />
+            )}
           </div>
           <div className="p-3">
             <p className="text-lg font-medium mb-4">View order details</p>
