@@ -4,10 +4,17 @@ import { v4 as uuid } from "uuid";
 import DataInput from "./DataInput";
 import storageManager from "../../utils/storageManager";
 
-const AddressInformation = ({ userData, handleSectionVisibility }) => {
+const AddressInformation = ({
+  userData,
+  targetAddress,
+  handleSectionVisibility,
+}) => {
   const database = storageManager.loadFromLocalStorage("usersDb");
   const userDB = database.find((user) => user.id === userData.id);
-  const userAddress = userDB?.userDetails?.addresses?.[0];
+  const userAddresses = userDB?.userDetails?.addresses;
+  const userAddress = userAddresses.find(
+    (address) => address.id === targetAddress
+  );
 
   const getUniqueId = () => {
     const uniqueId = uuid();
@@ -26,8 +33,14 @@ const AddressInformation = ({ userData, handleSectionVisibility }) => {
   });
 
   const handleSubmission = (values) => {
-    const newValue = { id: getUniqueId(), ...values };
-    const existingAddresses = userDB.userDetails.addresses || [];
+    const newValue = {
+      id: targetAddress ? targetAddress : getUniqueId(),
+      ...values,
+    };
+    const existingAddresses =
+      userDB.userDetails.addresses.filter(
+        (address) => address.id !== targetAddress
+      ) || [];
     const updatedUserDB = {
       ...userDB,
       userDetails: {

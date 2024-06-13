@@ -9,6 +9,7 @@ import { createOutline } from "ionicons/icons";
 const Profile = () => {
   const userData = useSelector((state) => state.userReducer);
   const [activeSection, setActiveSection] = useState("profileOverview");
+  const [targetAddress, setTargetAddress] = useState(null);
   const [sectionVisibility, setSectionVisiblity] = useState({
     userInformation: true,
     addressInformation: true,
@@ -17,7 +18,7 @@ const Profile = () => {
   const database = storageManager.loadFromLocalStorage("usersDb");
   const userDB = database.find((user) => user.id === userData.id);
   const userDetails = userDB.userDetails;
-  const userAddress = userDB.userDetails.addresses[0];
+  const userAddresses = userDB?.userDetails?.addresses;
 
   const handleActiveSection = (section) => {
     setActiveSection(section);
@@ -86,7 +87,7 @@ const Profile = () => {
                   <div className="flex flex-col">
                     <p className="text-sm font-normal">Postcode</p>
                     <p className="text-base font-normal">
-                      {userAddress.pincode}
+                      {/* {userAddress.pincode} */}
                     </p>
                   </div>
                 </div>
@@ -100,38 +101,52 @@ const Profile = () => {
             ) : (
               <UserInformation
                 userData={userData}
-                sectionVisibility={sectionVisibility}
                 handleSectionVisibility={handleSectionVisibility}
               />
             )}
           </div>
           <div className="p-3 bg-neutral-50 outline outline-1 outline-neutral-200 rounded">
             <p className="text-lg font-medium mb-2">Addresses</p>
-            {sectionVisibility["addressInformation"] &&
-            userAddress?.streetAddress ? (
-              <div className="flex justify-between">
-                <div>
-                  <p className="text-base font-normal">
-                    {userAddress.flatAddress}
-                  </p>
-                  <p className="text-base font-normal">
-                    {userAddress.streetAddress}
-                  </p>
-                  <p className="text-base font-normal">{userAddress.town}</p>
-                  <p className="text-base font-normal">{userAddress.state}</p>
-                  <p className="text-base font-normal">{userAddress.pincode}</p>
-                </div>
-                <p
-                  className="px-1  bg-neutral-50 self-start text-neutral-800 cursor-pointer rounded"
-                  onClick={() => handleSectionVisibility("addressInformation")}
-                >
-                  <IonIcon icon={createOutline} className="text-xl" />
-                </p>
-              </div>
+            {sectionVisibility["addressInformation"] && userAddresses?.[0] ? (
+              <>
+                {userAddresses.map((userAddress) => (
+                  <div
+                    key={userAddress.id}
+                    className="mb-2 flex justify-between outline outline-1 outline-neutral-400 p-2 rounded-sm"
+                  >
+                    <div>
+                      <p className="text-base font-normal">
+                        {userAddress.flatAddress}
+                      </p>
+                      <p className="text-base font-normal">
+                        {userAddress.streetAddress}
+                      </p>
+                      <p className="text-base font-normal">
+                        {userAddress.town}
+                      </p>
+                      <p className="text-base font-normal">
+                        {userAddress.state}
+                      </p>
+                      <p className="text-base font-normal">
+                        {userAddress.pincode}
+                      </p>
+                    </div>
+                    <p
+                      className="px-1  bg-neutral-50 self-start text-neutral-800 cursor-pointer rounded"
+                      onClick={() => {
+                        handleSectionVisibility("addressInformation");
+                        setTargetAddress(userAddress.id);
+                      }}
+                    >
+                      <IonIcon icon={createOutline} className="text-xl" />
+                    </p>
+                  </div>
+                ))}
+              </>
             ) : (
               <AddressInformation
                 userData={userData}
-                sectionVisibility={sectionVisibility}
+                targetAddress={targetAddress}
                 handleSectionVisibility={handleSectionVisibility}
               />
             )}
