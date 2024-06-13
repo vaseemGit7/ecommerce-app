@@ -7,6 +7,8 @@ import storageManager from "../utils/storageManager";
 import { getCurrentDate } from "../utils/dateHandler";
 import { removeAllProductFromCart } from "../actions/userActions";
 import ConfirmModal from "./ConfirmModal";
+import { IonIcon } from "@ionic/react";
+import { createOutline } from "ionicons/icons";
 
 const Checkout = () => {
   const location = useLocation();
@@ -22,6 +24,10 @@ const Checkout = () => {
   const [orderDetails, setOrderDetails] = useState(null);
   const [invoiceNo, setInvoiceNo] = useState(null);
   const [formattedDate, setFormattedDate] = useState(null);
+
+  const database = storageManager.loadFromLocalStorage("usersDb");
+  const userDB = database.find((user) => user.id === userData.id);
+  const userDetails = userDB.userDetails;
 
   const handleSectionVisibility = (section) => {
     setSectionVisiblity((prevState) => ({
@@ -75,11 +81,30 @@ const Checkout = () => {
           </div>
           <div className="p-3">
             <p className="text-lg font-medium mb-4">My information</p>
-            <UserInformation
-              userData={userData}
-              sectionVisibility={sectionVisibility}
-              handleSectionVisibility={handleSectionVisibility}
-            />
+            {sectionVisibility.userInformation && userDetails.fullName ? (
+              <div className="flex justify-between bg-neutral-100 outline outline-1 outline-neutral-200 p-2 rounded">
+                <div className="flex flex-col gap-1">
+                  <p className="text-sm font-medium text-neutral-800">
+                    {userDetails.fullName}
+                  </p>
+                  <p className="text-sm font-medium text-neutral-800">
+                    {userDetails.email}
+                  </p>
+                </div>
+                <p
+                  className="px-1  bg-neutral-50 self-start text-neutral-800 cursor-pointer rounded"
+                  onClick={() => handleSectionVisibility("userInformation")}
+                >
+                  <IonIcon icon={createOutline} className="text-xl" />
+                </p>
+              </div>
+            ) : (
+              <UserInformation
+                userData={userData}
+                sectionVisibility={sectionVisibility}
+                handleSectionVisibility={handleSectionVisibility}
+              />
+            )}
           </div>
           <div className="p-3">
             <p className="text-lg font-medium mb-4">Billing address</p>
