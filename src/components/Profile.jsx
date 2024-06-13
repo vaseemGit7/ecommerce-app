@@ -1,10 +1,18 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import storageManager from "../utils/storageManager";
+import UserInformation from "./forms/UserInformation";
+import AddressInformation from "./forms/AddressInformation";
+import { IonIcon } from "@ionic/react";
+import { createOutline } from "ionicons/icons";
 
 const Profile = () => {
   const userData = useSelector((state) => state.userReducer);
   const [activeSection, setActiveSection] = useState("profileOverview");
+  const [sectionVisibility, setSectionVisiblity] = useState({
+    userInformation: true,
+    addressInformation: true,
+  });
 
   const database = storageManager.loadFromLocalStorage("usersDb");
   const userDB = database.find((user) => user.id === userData.id);
@@ -13,6 +21,13 @@ const Profile = () => {
 
   const handleActiveSection = (section) => {
     setActiveSection(section);
+  };
+
+  const handleSectionVisibility = (section) => {
+    setSectionVisiblity((prevState) => ({
+      ...prevState,
+      [section]: !prevState[section],
+    }));
   };
 
   return (
@@ -43,44 +58,83 @@ const Profile = () => {
         <div className="w-3/6 place-self-center">
           <div className="p-3 bg-neutral-50 outline outline-1 outline-neutral-200 rounded mb-3 ">
             <p className="text-lg font-medium mb-2">My details</p>
-            <div className="flex flex-col gap-2">
-              <div className="flex flex-col">
-                <p className="text-sm font-normal">Email</p>
-                <p className="text-base font-normal">{userDetails.email}</p>
-              </div>
-              <div className="flex flex-col">
-                <p className="text-sm font-normal">Full name</p>
-                <p className="text-base font-normal">{userDetails.fullName}</p>
-              </div>
-              <div className="flex flex-col">
-                <p className="text-sm font-normal">Date of birth</p>
-                <p className="text-base font-normal">
-                  {userDetails.dateOfBirth}
+            {sectionVisibility.userInformation && userDetails.fullName ? (
+              <div className="flex justify-between">
+                <div className="flex flex-col gap-2">
+                  <div className="flex flex-col">
+                    <p className="text-sm font-normal">Email</p>
+                    <p className="text-base font-normal">{userDetails.email}</p>
+                  </div>
+                  <div className="flex flex-col">
+                    <p className="text-sm font-normal">Full name</p>
+                    <p className="text-base font-normal">
+                      {userDetails.fullName}
+                    </p>
+                  </div>
+                  <div className="flex flex-col">
+                    <p className="text-sm font-normal">Date of birth</p>
+                    <p className="text-base font-normal">
+                      {userDetails.dateOfBirth}
+                    </p>
+                  </div>
+                  <div className="flex flex-col">
+                    <p className="text-sm font-normal">Phone number</p>
+                    <p className="text-base font-normal">
+                      {userDetails.phoneNumber}
+                    </p>
+                  </div>
+                  <div className="flex flex-col">
+                    <p className="text-sm font-normal">Postcode</p>
+                    <p className="text-base font-normal">
+                      {userAddress.pincode}
+                    </p>
+                  </div>
+                </div>
+                <p
+                  className="px-1  bg-neutral-50 self-start text-neutral-800 cursor-pointer rounded"
+                  onClick={() => handleSectionVisibility("userInformation")}
+                >
+                  <IonIcon icon={createOutline} className="text-xl" />
                 </p>
               </div>
-              <div className="flex flex-col">
-                <p className="text-sm font-normal">Phone number</p>
-                <p className="text-base font-normal">
-                  {userDetails.phoneNumber}
-                </p>
-              </div>
-              <div className="flex flex-col">
-                <p className="text-sm font-normal">Postcode</p>
-                <p className="text-base font-normal">{userAddress.pincode}</p>
-              </div>
-            </div>
+            ) : (
+              <UserInformation
+                userData={userData}
+                sectionVisibility={sectionVisibility}
+                handleSectionVisibility={handleSectionVisibility}
+              />
+            )}
           </div>
           <div className="p-3 bg-neutral-50 outline outline-1 outline-neutral-200 rounded">
             <p className="text-lg font-medium mb-2">Addresses</p>
-            <div>
-              <p className="text-base font-normal">{userAddress.flatAddress}</p>
-              <p className="text-base font-normal">
-                {userAddress.streetAddress}
-              </p>
-              <p className="text-base font-normal">{userAddress.town}</p>
-              <p className="text-base font-normal">{userAddress.state}</p>
-              <p className="text-base font-normal">{userAddress.pincode}</p>
-            </div>
+            {sectionVisibility["addressInformation"] &&
+            userAddress?.streetAddress ? (
+              <div className="flex justify-between">
+                <div>
+                  <p className="text-base font-normal">
+                    {userAddress.flatAddress}
+                  </p>
+                  <p className="text-base font-normal">
+                    {userAddress.streetAddress}
+                  </p>
+                  <p className="text-base font-normal">{userAddress.town}</p>
+                  <p className="text-base font-normal">{userAddress.state}</p>
+                  <p className="text-base font-normal">{userAddress.pincode}</p>
+                </div>
+                <p
+                  className="px-1  bg-neutral-50 self-start text-neutral-800 cursor-pointer rounded"
+                  onClick={() => handleSectionVisibility("addressInformation")}
+                >
+                  <IonIcon icon={createOutline} className="text-xl" />
+                </p>
+              </div>
+            ) : (
+              <AddressInformation
+                userData={userData}
+                sectionVisibility={sectionVisibility}
+                handleSectionVisibility={handleSectionVisibility}
+              />
+            )}
           </div>
         </div>
       )}
