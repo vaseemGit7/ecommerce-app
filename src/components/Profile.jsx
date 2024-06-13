@@ -108,7 +108,7 @@ const Profile = () => {
           <div className="p-3 bg-neutral-50 outline outline-1 outline-neutral-200 rounded">
             <p className="text-lg font-medium mb-2">Addresses</p>
             {sectionVisibility["addressInformation"] && userAddresses?.[0] ? (
-              <>
+              <div className="flex flex-col">
                 {userAddresses.map((userAddress) => (
                   <div
                     key={userAddress.id}
@@ -142,7 +142,13 @@ const Profile = () => {
                     </p>
                   </div>
                 ))}
-              </>
+                <button
+                  className="py-2 px-3 self-center w-3/5 mt-3 text-center align-middle bg-neutral-700 text-base text-neutral-50 font-normal rounded hover:bg-neutral-800 hover:shadow-lg"
+                  onClick={() => handleSectionVisibility("addressInformation")}
+                >
+                  Add Address
+                </button>
+              </div>
             ) : (
               <AddressInformation
                 userData={userData}
