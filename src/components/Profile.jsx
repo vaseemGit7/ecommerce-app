@@ -4,7 +4,7 @@ import storageManager from "../utils/storageManager";
 import UserInformation from "./forms/UserInformation";
 import AddressInformation from "./forms/AddressInformation";
 import { IonIcon } from "@ionic/react";
-import { createOutline } from "ionicons/icons";
+import { createOutline, trashOutline } from "ionicons/icons";
 
 const Profile = () => {
   const userData = useSelector((state) => state.userReducer);
@@ -14,6 +14,7 @@ const Profile = () => {
     userInformation: true,
     addressInformation: true,
   });
+  const [forceRender, setForceRender] = useState(false);
 
   const database = storageManager.loadFromLocalStorage("usersDb");
   const userDB = database.find((user) => user.id === userData.id);
@@ -29,6 +30,23 @@ const Profile = () => {
       ...prevState,
       [section]: !prevState[section],
     }));
+  };
+
+  const handleAddressDeletion = (addressID) => {
+    const updatedAddresses = userAddresses.filter(
+      (address) => address.id !== addressID
+    );
+
+    const updatedUserDB = {
+      ...userDB,
+      userDetails: { ...userDetails, addresses: updatedAddresses },
+    };
+
+    const existingUsers = database.filter((user) => user.id !== userData.id);
+    const updatedUsers = [...existingUsers, updatedUserDB];
+
+    storageManager.saveToLocalStorage("usersDb", updatedUsers);
+    setForceRender((prevState) => !prevState);
   };
 
   return (
@@ -59,35 +77,37 @@ const Profile = () => {
         <div className="w-3/6 place-self-center">
           <div className="p-3 bg-neutral-50 outline outline-1 outline-neutral-200 rounded mb-3 ">
             <p className="text-lg font-medium mb-2">My details</p>
-            {sectionVisibility.userInformation && userDetails.fullName ? (
+            {sectionVisibility.userInformation && userDetails?.fullName ? (
               <div className="flex justify-between">
                 <div className="flex flex-col gap-2">
                   <div className="flex flex-col">
                     <p className="text-sm font-normal">Email</p>
-                    <p className="text-base font-normal">{userDetails.email}</p>
+                    <p className="text-base font-normal">
+                      {userDetails?.email}
+                    </p>
                   </div>
                   <div className="flex flex-col">
                     <p className="text-sm font-normal">Full name</p>
                     <p className="text-base font-normal">
-                      {userDetails.fullName}
+                      {userDetails?.fullName}
                     </p>
                   </div>
                   <div className="flex flex-col">
                     <p className="text-sm font-normal">Date of birth</p>
                     <p className="text-base font-normal">
-                      {userDetails.dateOfBirth}
+                      {userDetails?.dateOfBirth}
                     </p>
                   </div>
                   <div className="flex flex-col">
                     <p className="text-sm font-normal">Phone number</p>
                     <p className="text-base font-normal">
-                      {userDetails.phoneNumber}
+                      {userDetails?.phoneNumber}
                     </p>
                   </div>
                   <div className="flex flex-col">
                     <p className="text-sm font-normal">Postcode</p>
                     <p className="text-base font-normal">
-                      {/* {userAddress.pincode} */}
+                      {userAddresses?.[0].pincode}
                     </p>
                   </div>
                 </div>
@@ -112,7 +132,7 @@ const Profile = () => {
                 {userAddresses.map((userAddress) => (
                   <div
                     key={userAddress.id}
-                    className="mb-2 flex justify-between outline outline-1 outline-neutral-400 p-2 rounded-sm"
+                    className="mb-2 flex justify-between outline outline-1 outline-neutral-300 p-2 rounded-sm"
                   >
                     <div>
                       <p className="text-base font-normal">
@@ -131,15 +151,28 @@ const Profile = () => {
                         {userAddress.pincode}
                       </p>
                     </div>
-                    <p
-                      className="px-1  bg-neutral-50 self-start text-neutral-800 cursor-pointer rounded"
-                      onClick={() => {
-                        handleSectionVisibility("addressInformation");
-                        setTargetAddress(userAddress.id);
-                      }}
-                    >
-                      <IonIcon icon={createOutline} className="text-xl" />
-                    </p>
+                    <div className="flex  gap-2">
+                      <div
+                        className="text-neutral-800 cursor-pointer"
+                        onClick={() => {
+                          handleSectionVisibility("addressInformation");
+                          setTargetAddress(userAddress.id);
+                        }}
+                      >
+                        <IonIcon icon={createOutline} className="text-xl" />
+                      </div>
+                      <div
+                        className="text-neutral-800 cursor-pointer"
+                        onClick={() => {
+                          handleAddressDeletion(userAddress.id);
+                        }}
+                      >
+                        <IonIcon
+                          icon={trashOutline}
+                          className="text-xl hover:text-red-600"
+                        />
+                      </div>
+                    </div>
                   </div>
                 ))}
                 <button
@@ -162,67 +195,83 @@ const Profile = () => {
       {activeSection === "orderHistory" && (
         <div className="w-3/6 place-self-center">
           <div className="p-3 flex flex-col gap-2 items-center bg-neutral-50 outline outline-1 outline-neutral-200 rounded mb-3">
-            {[...userDetails.orderHistory].reverse().map((product) => (
-              <div
-                key={product.id}
-                className="w-5/6 p-2 grid grid-cols-[1fr_4fr] outline outline-1 outline-neutral-400 rounded bg-neutral-50"
-              >
-                <img className="rounded" src={product.image} />
-                <div className="p-2 flex flex-col justify-between text-neutral-800">
-                  <p className="text-lg font-semibold">{product.name}</p>
-                  <div className="flex gap-1">
-                    <p className="text-base font-semibold">Price : </p>
-                    <p className="text-base font-semibold">₹ {product.price}</p>
+            {userDetails.orderHistory ? (
+              [...userDetails.orderHistory].reverse().map((product) => (
+                <div
+                  key={product.id}
+                  className="w-5/6 p-2 grid grid-cols-[1fr_4fr] outline outline-1 outline-neutral-400 rounded bg-neutral-50"
+                >
+                  <img className="rounded" src={product.image} />
+                  <div className="p-2 flex flex-col justify-between text-neutral-800">
+                    <p className="text-lg font-semibold">{product.name}</p>
+                    <div className="flex gap-1">
+                      <p className="text-base font-semibold">Price : </p>
+                      <p className="text-base font-semibold">
+                        ₹ {product.price}
+                      </p>
+                    </div>
+                    <>
+                      <div className="flex justify-between">
+                        <div className="flex flex-col gap-2">
+                          <div className="flex gap-1">
+                            <p className="text-sm font-medium">
+                              Total Price :{" "}
+                            </p>
+                            <p className="text-sm font-medium">
+                              ₹ {product.price * product.quantity}
+                            </p>
+                          </div>
+                          <div className="flex gap-1">
+                            <p className="text-sm font-medium">Color : </p>
+                            <p className="text-sm font-medium">
+                              {product.color}
+                            </p>
+                          </div>
+                          <div className="flex gap-1">
+                            <p className="text-sm font-medium">
+                              Order Placed :{" "}
+                            </p>
+                            <p className="text-sm font-medium">
+                              {product.orderPlaced}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex flex-col gap-2">
+                          <div className="flex gap-1">
+                            <p className="text-sm font-medium">Article No. </p>
+                            <p className="text-sm font-medium">{product.id}</p>
+                          </div>
+                          <div className="flex gap-1">
+                            <p className="text-sm font-medium">Size : </p>
+                            <p className="text-sm font-medium">
+                              {product.size}
+                            </p>
+                          </div>
+                          <div className="flex gap-1">
+                            <p className="text-sm font-medium">Quantity : </p>
+                            <p className="text-sm font-medium">
+                              {product.quantity}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex justify-between">
+                        <div className="flex gap-2"></div>
+                        <div className="flex gap-2"></div>
+                      </div>
+                      <div className="flex justify-between">
+                        <div className="flex gap-2"></div>
+                        <div className="flex gap-2 "></div>
+                      </div>
+                    </>
                   </div>
-                  <>
-                    <div className="flex justify-between">
-                      <div className="flex flex-col gap-2">
-                        <div className="flex gap-1">
-                          <p className="text-sm font-medium">Total Price : </p>
-                          <p className="text-sm font-medium">
-                            ₹ {product.price * product.quantity}
-                          </p>
-                        </div>
-                        <div className="flex gap-1">
-                          <p className="text-sm font-medium">Color : </p>
-                          <p className="text-sm font-medium">{product.color}</p>
-                        </div>
-                        <div className="flex gap-1">
-                          <p className="text-sm font-medium">Order Placed : </p>
-                          <p className="text-sm font-medium">
-                            {product.orderPlaced}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex flex-col gap-2">
-                        <div className="flex gap-1">
-                          <p className="text-sm font-medium">Article No. </p>
-                          <p className="text-sm font-medium">{product.id}</p>
-                        </div>
-                        <div className="flex gap-1">
-                          <p className="text-sm font-medium">Size : </p>
-                          <p className="text-sm font-medium">{product.size}</p>
-                        </div>
-                        <div className="flex gap-1">
-                          <p className="text-sm font-medium">Quantity : </p>
-                          <p className="text-sm font-medium">
-                            {product.quantity}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex justify-between">
-                      <div className="flex gap-2"></div>
-                      <div className="flex gap-2"></div>
-                    </div>
-                    <div className="flex justify-between">
-                      <div className="flex gap-2"></div>
-                      <div className="flex gap-2 "></div>
-                    </div>
-                  </>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p className="text-2xl font-semibold text-neutral-800">
+                There is no order history
+              </p>
+            )}
           </div>
         </div>
       )}
