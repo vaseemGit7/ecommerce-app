@@ -12,9 +12,13 @@ const AddressInformation = ({
   const database = storageManager.loadFromLocalStorage("usersDb");
   const userDB = database.find((user) => user.id === userData.id);
   const userAddresses = userDB?.userDetails?.addresses;
-  const userAddress = userAddresses.find(
-    (address) => address.id === targetAddress
-  );
+  let userAddress = undefined;
+
+  if (targetAddress) {
+    userAddress = userAddresses?.find(
+      (address) => address.id === targetAddress
+    );
+  }
 
   const getUniqueId = () => {
     const uniqueId = uuid();
@@ -33,21 +37,26 @@ const AddressInformation = ({
   });
 
   const handleSubmission = (values) => {
-    const newValue = {
+    console.log("submission is called");
+    const updatedAddress = {
       id: targetAddress ? targetAddress : getUniqueId(),
       ...values,
     };
-    const existingAddresses =
-      userDB.userDetails.addresses.filter(
-        (address) => address.id !== targetAddress
-      ) || [];
+
+    const updatedAddresses = targetAddress
+      ? userAddresses.map((address) =>
+          address.id === targetAddress ? updatedAddress : address
+        )
+      : [...userAddresses, updatedAddress];
+
     const updatedUserDB = {
       ...userDB,
       userDetails: {
         ...userDB.userDetails,
-        addresses: [...existingAddresses, newValue],
+        addresses: updatedAddresses,
       },
     };
+
     const existingUsers = database.filter((user) => user.id !== userData.id);
 
     const updatedUsers = [...existingUsers, updatedUserDB];
