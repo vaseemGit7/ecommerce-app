@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import UserInformation from "./forms/UserInformation";
@@ -26,6 +26,7 @@ const Checkout = () => {
   const [invoiceNo, setInvoiceNo] = useState(null);
   const [formattedDate, setFormattedDate] = useState(null);
   const [targetAddress, setTargetAddress] = useState(null);
+  const [selectedAddress, setSelectedAddress] = useState(null);
 
   const database = storageManager.loadFromLocalStorage("usersDb");
   const userDB = database.find((user) => user.id === userData.id);
@@ -75,6 +76,12 @@ const Checkout = () => {
     handleDialogToggle();
   };
 
+  useEffect(() => {
+    if (!selectedAddress && userAddresses && userAddresses.length > 0) {
+      setSelectedAddress(userAddresses[0]);
+    }
+  }, [userAddresses, selectedAddress]);
+  console.log(selectedAddress);
   return (
     <>
       <div
@@ -103,7 +110,7 @@ const Checkout = () => {
                     </p>
                   </div>
                   <p
-                    className="px-1  bg-neutral-50 self-start text-neutral-800 cursor-pointer rounded"
+                    className="text-neutral-800 cursor-pointer rounded"
                     onClick={() => handleSectionVisibility("userInformation")}
                   >
                     <IonIcon icon={createOutline} className="text-xl" />
@@ -119,30 +126,44 @@ const Checkout = () => {
             <div className="p-3">
               <p className="text-lg font-medium mb-4">Billing address</p>
               {sectionVisibility["addressInformation"] && userAddresses?.[0] ? (
-                <div className="flex flex-col">
+                <div className="flex flex-col gap-2">
                   {userAddresses.map((userAddress) => (
                     <div
                       key={userAddress.id}
                       className="flex justify-between bg-neutral-100 outline outline-1 outline-neutral-200  p-2 rounded"
                     >
-                      <div className="flex flex-col gap-1 text-sm font-medium text-neutral-800">
-                        <p>{userDB.userDetails.fullName}</p>
-                        <p className="mb-1">{userDB.userDetails.phoneNumber}</p>
-                        <p>{userAddress.flatAddress}</p>
-                        <p>{userAddress.streetAddress}</p>
-                        <p>{userAddress.town}</p>
-                        <p>{userAddress.state}</p>
-                        <p>{userAddress.pincode}</p>
+                      <div>
+                        <input
+                          type="radio"
+                          className="h-4 w-4"
+                          value={userAddress}
+                          checked={
+                            selectedAddress &&
+                            selectedAddress.id === userAddress.id
+                          }
+                          onChange={() => setSelectedAddress(userAddress)}
+                        />
+                        <div className="flex flex-col gap-1 text-sm font-medium text-neutral-800">
+                          <p>{userDB.userDetails.fullName}</p>
+                          <p className="mb-1">
+                            {userDB.userDetails.phoneNumber}
+                          </p>
+                          <p>{userAddress.flatAddress}</p>
+                          <p>{userAddress.streetAddress}</p>
+                          <p>{userAddress.town}</p>
+                          <p>{userAddress.state}</p>
+                          <p>{userAddress.pincode}</p>
+                        </div>
                       </div>
-                      <p
-                        className="px-1  bg-neutral-50 self-start text-neutral-800 cursor-pointer rounded"
+                      <div
+                        className="text-neutral-800 cursor-pointer rounded"
                         onClick={() => {
                           handleSectionVisibility("addressInformation");
                           setTargetAddress(userAddress.id);
                         }}
                       >
                         <IonIcon icon={createOutline} className="text-xl" />
-                      </p>
+                      </div>
                     </div>
                   ))}
                   <button
@@ -168,7 +189,7 @@ const Checkout = () => {
                 {cartProduct.map((product) => (
                   <div
                     key={product.id}
-                    className="grid  w-44 grid-rows-[max-content_1fr] text-neutral-800 outline outline-1 outline-neutral-600 rounded p-2"
+                    className="grid w-1/3 grid-rows-[max-content_1fr] text-neutral-800 outline outline-1 outline-neutral-600 rounded p-2"
                   >
                     <img
                       className="place-self-center h-40 rounded"
@@ -234,8 +255,13 @@ const Checkout = () => {
                 <p className="text-xl font-medium">Rs. {totalPrice}</p>
               </div>
               <button
-                className="py-2 px-3 self-center w-3/5 mt-3 text-center align-middle bg-neutral-800 text-base text-neutral-50 font-normal rounded hover:shadow-lg"
+                className={`py-2 px-3 self-center w-3/5 mt-3 text-center align-middle text-base text-neutral-50 font-normal rounded ${
+                  userAddresses.length > 0
+                    ? "bg-neutral-700  hover:bg-neutral-800 hover:shadow-lg"
+                    : "bg-neutral-500 cursor-default"
+                } `}
                 onClick={handlePlaceOrder}
+                disabled={userAddresses.length > 0 ? false : true}
               >
                 Place Order
               </button>
@@ -246,6 +272,7 @@ const Checkout = () => {
           dialogToggle={dialogToggle}
           handleDialogToggle={handleDialogToggle}
           userData={userData}
+          selectedAddress={selectedAddress}
           orderDetails={orderDetails}
           deliveryCharge={deliveryCharge}
           totalPrice={totalPrice}
