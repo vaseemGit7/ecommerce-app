@@ -81,7 +81,6 @@ const Checkout = () => {
       setSelectedAddress(userAddresses[0]);
     }
   }, [userAddresses, selectedAddress]);
-  console.log(selectedAddress);
   return (
     <>
       <div

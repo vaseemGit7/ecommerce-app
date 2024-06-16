@@ -37,7 +37,6 @@ const AddressInformation = ({
   });
 
   const handleSubmission = (values) => {
-    console.log("submission is called");
     const updatedAddress = {
       id: targetAddress ? targetAddress : getUniqueId(),
       ...values,

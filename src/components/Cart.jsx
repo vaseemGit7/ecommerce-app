@@ -53,7 +53,6 @@ const Cart = () => {
     }
   };
 
-  console.log(cartProduct);
   return (
     <div className="mx-28">
       <div className="grid grid-cols-[3fr_2fr] ">

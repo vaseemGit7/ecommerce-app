@@ -1,5 +1,4 @@
 const Loading = () => {
-  console.log("Fallback is called");
   return (
     <>
       <div className="h-full grid place-items-center">

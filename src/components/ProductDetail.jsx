@@ -30,7 +30,6 @@ const ProductDetail = () => {
 
   useEffect(() => {
     const getProductById = async () => {
-      console.log("get product by id is called");
       try {
         const data = await getProductDetail(id);
         setProduct(data.product);
@@ -79,9 +78,6 @@ const ProductDetail = () => {
       });
     }
   };
-
-  console.log(product);
-  console.log(currentVariant);
 
   return (
     <>
