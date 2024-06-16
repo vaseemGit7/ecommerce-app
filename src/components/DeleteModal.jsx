@@ -1,7 +1,10 @@
 import { useEffect, useRef } from "react";
+import storageManager from "../utils/storageManager";
+import { useNavigate } from "react-router-dom";
 
 const DeleteModal = ({ userData, dialogToggle, handleDialogToggle }) => {
   const dialogModal = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (dialogToggle) {
@@ -12,6 +15,10 @@ const DeleteModal = ({ userData, dialogToggle, handleDialogToggle }) => {
   }, [dialogToggle]);
 
   const handleDelete = () => {
+    const database = storageManager.loadFromLocalStorage("usersDb");
+    const updatedDB = database.filter((user) => user.id !== userData.id);
+    storageManager.saveToLocalStorage("usersDb", updatedDB);
+    navigate("/", { replace: true });
     handleDialogToggle();
   };
 
