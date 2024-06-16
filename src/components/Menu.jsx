@@ -14,17 +14,21 @@ const Menu = () => {
   const [products, setProducts] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [index, setIndex] = useState(1);
+  const [isLoading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   const paramsState = useSelector((state) => state.paramsReducer);
 
   const getProductsHM = async () => {
     try {
+      setLoading(true);
       const data = await getHMProducts(0, 12, paramsState, categoryCode);
       dispatch(setResultData(data));
       setProducts(data.results);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -48,29 +52,33 @@ const Menu = () => {
   return (
     <div className="relative grid grid-cols-[1fr_6fr] gap-3">
       <Filterbar />
-      <InfiniteScroll
-        dataLength={products.length}
-        next={fetchMoreData}
-        hasMore={hasMore}
-        loader={<ProductLoading />}
-      >
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
-            gap: "10px",
-          }}
-          className="p-1"
+      {isLoading ? (
+        <ProductLoading />
+      ) : (
+        <InfiniteScroll
+          dataLength={products.length}
+          next={fetchMoreData}
+          hasMore={hasMore}
+          loader={<ProductLoading />}
         >
-          {products &&
-            products.map((product) => (
-              <ProductCard
-                key={product.defaultArticle.code}
-                product={product}
-              />
-            ))}
-        </div>
-      </InfiniteScroll>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
+              gap: "10px",
+            }}
+            className="p-1"
+          >
+            {products &&
+              products.map((product) => (
+                <ProductCard
+                  key={product.defaultArticle.code}
+                  product={product}
+                />
+              ))}
+          </div>
+        </InfiniteScroll>
+      )}
     </div>
   );
 };
