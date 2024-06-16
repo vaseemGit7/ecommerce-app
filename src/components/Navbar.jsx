@@ -90,6 +90,7 @@ const Navbar = () => {
           </NavLink>
           <NavLink
             to="/"
+            replace
             className="flex items-center text-neutral-900 font-medium text-lg hover:border-b-2 border-neutral-600  cursor-pointer"
           >
             <IonIcon

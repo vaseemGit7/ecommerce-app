@@ -7,7 +7,7 @@ const SessionExpired = () => {
 
   useEffect(() => {
     if (countdown === 0) {
-      navigate("/");
+      navigate("/", { replace: true });
     }
 
     const timer = setInterval(() => {
@@ -28,7 +28,7 @@ const SessionExpired = () => {
             In {countdown} {countdown > 1 ? "seconds" : "second"}
           </p>
         </div>
-        <NavLink className="w-full text-center" to="/">
+        <NavLink className="w-full text-center" to="/" replace>
           <button className="w-4/5 mt-2 px-2 py-1 text-lg bg-neutral-800 text-neutral-50 font-medium drop-shadow rounded hover:scale-[1.02]">
             Login
           </button>
