@@ -118,10 +118,10 @@ const LoginPage = () => {
                 }}
               >
                 {(formik) => (
-                  <div className="place-self-center flex flex-col">
+                  <div className="self-center flex flex-col">
                     <form
                       onSubmit={formik.handleSubmit}
-                      className="flex flex-col items-center gap-7"
+                      className="flex flex-col  gap-7"
                     >
                       <CredentialInput
                         name="newEmail"
@@ -139,7 +139,7 @@ const LoginPage = () => {
                         label="DATE OF BIRTH"
                       />
                       <button
-                        className="w-1/2 px-8 py-2 text-md font-semibold  text-neutral-50 bg-neutral-800 drop-shadow-md rounded-md hover:bg-neutral-950"
+                        className="w-1/2 self-center px-8 py-2 text-md font-semibold  text-neutral-50 bg-neutral-800 drop-shadow-md rounded-md hover:bg-neutral-950"
                         type="submit"
                       >
                         SIGN UP
@@ -170,7 +170,7 @@ const LoginPage = () => {
                 }}
               >
                 {(formik) => (
-                  <div className="relative place-self-center flex flex-col">
+                  <div className="relative self-center flex flex-col">
                     <div className="absolute -top-7 text-red-600 text-bases font-medium text-center">
                       {validUser === false ? (
                         <p className="">Invalid Email or Password</p>
@@ -180,7 +180,7 @@ const LoginPage = () => {
                     </div>
                     <form
                       onSubmit={formik.handleSubmit}
-                      className="relative place-self-center flex flex-col items-center gap-7"
+                      className="relative flex flex-col gap-7"
                     >
                       <CredentialInput
                         name="email"
@@ -193,14 +193,16 @@ const LoginPage = () => {
                         label="PASSWORD"
                       />
                       <button
-                        className="w-1/2 px-8 py-2 text-md font-semibold  text-neutral-50 bg-neutral-800 drop-shadow-md rounded-md hover:bg-neutral-950"
+                        className="w-1/2 self-center px-8 py-2 text-md font-semibold  text-neutral-50 bg-neutral-800 drop-shadow-md rounded-md hover:bg-neutral-950"
                         type="submit"
                       >
                         SIGN IN
                       </button>
                     </form>
                     <div className="flex gap-1 mt-4 text-sm font-normal justify-end">
-                      <p className="text-neutral-700">Don't have an account?</p>
+                      <p className="text-neutral-700">
+                        Don&apos;t have an account?
+                      </p>
                       <p
                         className="hover:text-violet-900 hover:font-medium cursor-pointer"
                         onClick={handleIsNewAccount}
