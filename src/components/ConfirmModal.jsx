@@ -7,6 +7,7 @@ const ConfirmModal = ({
   dialogToggle,
   handleDialogToggle,
   userData,
+  selectedAddress,
   orderDetails,
   deliveryCharge,
   totalPrice,
@@ -43,6 +44,7 @@ const ConfirmModal = ({
                 document={
                   <Invoice
                     userData={userData}
+                    userAddress={selectedAddress}
                     orderDetails={orderDetails}
                     deliveryCharge={deliveryCharge}
                     totalPrice={totalPrice}

@@ -153,6 +153,7 @@ const ProductItem = ({ orderDetails, itemName, itemValue }) => {
 const Invoice = ({
   userData,
   orderDetails,
+  userAddress,
   deliveryCharge,
   totalPrice,
   formattedDate,
@@ -161,8 +162,6 @@ const Invoice = ({
   const database = storageManager.loadFromLocalStorage("usersDb");
   const userDB = database.find((user) => user.id === userData.id);
   const userDetails = userDB.userDetails;
-  const userAddress = userDetails.addresses[0];
-
   return (
     <Document>
       <Page size="A4" style={styles.page}>
