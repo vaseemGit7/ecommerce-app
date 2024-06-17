@@ -10,6 +10,7 @@ import {
   personOutline,
   searchOutline,
 } from "ionicons/icons";
+import logo from "../assets/logo.svg";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -59,7 +60,7 @@ const Navbar = () => {
         </NavLink>
       </div>
       <NavLink to="/dashboard/home" className="place-self-center">
-        <img className="h-9" src="../src/assets/logo.svg" />
+        <img className="h-9" src={logo} />
       </NavLink>
       <div className="flex gap-4 justify-self-end">
         <div className="relative">

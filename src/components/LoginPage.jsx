@@ -7,6 +7,9 @@ import { v4 as uuid } from "uuid";
 import { setUser } from "../actions/userActions";
 import CredentialInput from "./CredentialInput";
 import storageManager from "../utils/storageManager";
+import loginBg from "../assets/login-bg.jpg";
+import loginCard from "../assets/login-card.jpeg";
+import logo from "../assets/logo.svg";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -46,19 +49,23 @@ const LoginPage = () => {
   const checkValidUser = (values) => {
     const database = storageManager.loadFromLocalStorage("usersDb");
 
-    database.forEach((user) => {
-      if (
-        user.credentials.email === values.email &&
-        user.credentials.password === values.password
-      ) {
-        setValidUser(true);
-        dispatch(setUser(user));
-        navigate("/dashboard/home");
-        return;
-      } else {
-        setValidUser(false);
-      }
-    });
+    if (!database) {
+      setIsNewAccount(true);
+    } else {
+      database.forEach((user) => {
+        if (
+          user.credentials.email === values.email &&
+          user.credentials.password === values.password
+        ) {
+          setValidUser(true);
+          dispatch(setUser(user));
+          navigate("/dashboard/home");
+          return;
+        } else {
+          setValidUser(false);
+        }
+      });
+    }
   };
 
   const handleIsNewAccount = () => {
@@ -92,7 +99,7 @@ const LoginPage = () => {
     <div
       className="login-bg h-full grid place-items-center"
       style={{
-        backgroundImage: "url('./src/assets/login-bg.jpg')",
+        backgroundImage: `url(${loginBg})`,
         backgroundPosition: "center",
         backgroundSize: "cover",
       }}
@@ -100,13 +107,10 @@ const LoginPage = () => {
       <div className="z-10 w-4/6 h-4/5 grid grid-cols-2 p-2 bg-neutral-200/75 bg-opa rounded-xl drop-shadow-lg">
         <div
           className="m-3 bg-cover bg-center rounded-lg"
-          style={{ backgroundImage: "url('./src/assets/login-card.jpeg')" }}
+          style={{ backgroundImage: `url(${loginCard})` }}
         ></div>
         <div className="grid grid-rows-[max-content_1fr]">
-          <img
-            className="justify-self-center mt-5"
-            src="./src/assets/logo.svg"
-          />
+          <img className="justify-self-center mt-5" src={logo} />
           {isNewAccount ? (
             <>
               <Formik

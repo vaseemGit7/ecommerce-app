@@ -1,4 +1,14 @@
 import { useEffect, useState } from "react";
+import carouselBanner1 from "../assets/banners/carousel-banner-1.jpg";
+import carouselBanner2 from "../assets/banners/carousel-banner-2.jpg";
+import carouselBanner3 from "../assets/banners/carousel-banner-3.jpg";
+import carouselBanner4 from "../assets/banners/carousel-banner-4.jpg";
+import carouselBanner5 from "../assets/banners/carousel-banner-5.jpg";
+import cardMen from "../assets/cards/card-Men.jpeg";
+import cardKids from "../assets/cards/card-Kids.jpeg";
+import cardWomen from "../assets/cards/card-Women.jpeg";
+import cardBaby from "../assets/cards/card-Baby.jpeg";
+import offerCard from "../assets/cards/offer-card.jpg";
 
 const Home = () => {
   const [index, setIndex] = useState(1);
@@ -9,6 +19,21 @@ const Home = () => {
     3: "Discover your new favourite looks in our men’s arrivals.",
     4: "Stylish and comfortable with our latest kids collection.",
     5: "Redefine your wardrobe with our must-have styles for women.",
+  };
+
+  const bannerImages = {
+    1: carouselBanner1,
+    2: carouselBanner2,
+    3: carouselBanner3,
+    4: carouselBanner4,
+    5: carouselBanner5,
+  };
+
+  const cardImages = {
+    0: cardMen,
+    1: cardWomen,
+    2: cardKids,
+    3: cardBaby,
   };
 
   const carouselDots = [];
@@ -38,7 +63,7 @@ const Home = () => {
       <div
         className="relative h-[35rem] w-full rounded"
         style={{
-          backgroundImage: `url('../src/assets/banners/carousel-banner-${index}.jpg`,
+          backgroundImage: `url(${bannerImages[index]}`,
           backgroundPosition: "center",
           backgroundSize: "cover",
         }}
@@ -89,7 +114,7 @@ const Home = () => {
               key={i}
               className="h-72 w-72 flex p-3 rounded justify-center"
               style={{
-                backgroundImage: `url('../src/assets/cards/card-${item}.jpeg`,
+                backgroundImage: `url(${cardImages[i]})`,
                 backgroundSize: "cover",
               }}
             >
@@ -104,7 +129,7 @@ const Home = () => {
         <div
           className="rounded-l"
           style={{
-            backgroundImage: `url('../src/assets/cards/offer-card.jpg`,
+            backgroundImage: `url(${offerCard})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
