@@ -255,12 +255,12 @@ const Checkout = () => {
               </div>
               <button
                 className={`py-2 px-3 self-center w-3/5 mt-3 text-center align-middle text-base text-neutral-50 font-normal rounded ${
-                  userAddresses.length > 0
+                  userAddresses?.length > 0
                     ? "bg-neutral-700  hover:bg-neutral-800 hover:shadow-lg"
                     : "bg-neutral-500 cursor-default"
                 } `}
                 onClick={handlePlaceOrder}
-                disabled={userAddresses.length > 0 ? false : true}
+                disabled={userAddresses?.length > 0 ? false : true}
               >
                 Place Order
               </button>
