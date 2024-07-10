@@ -33,10 +33,10 @@ const Checkout = () => {
   const userDetails = userDB.userDetails;
   const userAddresses = userDB?.userDetails?.addresses;
 
-  const handleSectionVisibility = (section) => {
+  const handleSectionVisibility = (section, isVisible) => {
     setSectionVisiblity((prevState) => ({
       ...prevState,
-      [section]: !prevState[section],
+      [section]: isVisible,
     }));
   };
 
@@ -110,7 +110,9 @@ const Checkout = () => {
                   </div>
                   <p
                     className="text-neutral-800 cursor-pointer rounded"
-                    onClick={() => handleSectionVisibility("userInformation")}
+                    onClick={() =>
+                      handleSectionVisibility("userInformation", false)
+                    }
                   >
                     <IonIcon icon={createOutline} className="text-xl" />
                   </p>
@@ -157,7 +159,7 @@ const Checkout = () => {
                       <div
                         className="text-neutral-800 cursor-pointer rounded"
                         onClick={() => {
-                          handleSectionVisibility("addressInformation");
+                          handleSectionVisibility("addressInformation", false);
                           setTargetAddress(userAddress.id);
                         }}
                       >
@@ -168,7 +170,7 @@ const Checkout = () => {
                   <button
                     className="py-2 px-3 self-center w-3/5 mt-3 text-center align-middle bg-neutral-700 text-base text-neutral-50 font-normal rounded hover:bg-neutral-800 hover:shadow-lg"
                     onClick={() =>
-                      handleSectionVisibility("addressInformation")
+                      handleSectionVisibility("addressInformation", false)
                     }
                   >
                     Add Address

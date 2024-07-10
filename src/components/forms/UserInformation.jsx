@@ -27,7 +27,7 @@ const UserInformation = ({ userData, handleSectionVisibility }) => {
 
     storageManager.saveToLocalStorage("usersDb", updatedUsers);
 
-    handleSectionVisibility("userInformation");
+    handleSectionVisibility("userInformation", true);
   };
 
   return (
@@ -64,7 +64,7 @@ const UserInformation = ({ userData, handleSectionVisibility }) => {
             <button
               type="button"
               className="py-2 px-3 self-center w-3/5 mt-3 text-center align-middle bg-neutral-50 outline outline-1 outline-neutral-600 text-base text-neutral-800 font-normal rounded hover:drop-shadow-lg"
-              onClick={() => handleSectionVisibility("userInformation")}
+              onClick={() => handleSectionVisibility("userInformation", true)}
             >
               Cancel
             </button>

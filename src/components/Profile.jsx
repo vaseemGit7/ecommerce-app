@@ -27,10 +27,10 @@ const Profile = () => {
     setActiveSection(section);
   };
 
-  const handleSectionVisibility = (section) => {
+  const handleSectionVisibility = (section, isVisible) => {
     setSectionVisiblity((prevState) => ({
       ...prevState,
-      [section]: !prevState[section],
+      [section]: isVisible,
     }));
   };
 
@@ -111,16 +111,20 @@ const Profile = () => {
                         {userDetails?.phoneNumber}
                       </p>
                     </div>
-                    <div className="flex flex-col">
-                      <p className="text-sm font-normal">Postcode</p>
-                      <p className="text-base font-normal">
-                        {userAddresses?.[0].pincode}
-                      </p>
-                    </div>
+                    {userAddresses?.[0]?.pincode && (
+                      <div className="flex flex-col">
+                        <p className="text-sm font-normal">Postcode</p>
+                        <p className="text-base font-normal">
+                          {userAddresses?.[0].pincode}
+                        </p>
+                      </div>
+                    )}
                   </div>
                   <p
                     className="px-1  bg-neutral-50 self-start text-neutral-800 cursor-pointer rounded"
-                    onClick={() => handleSectionVisibility("userInformation")}
+                    onClick={() =>
+                      handleSectionVisibility("userInformation", false)
+                    }
                   >
                     <IonIcon icon={createOutline} className="text-xl" />
                   </p>
@@ -162,7 +166,10 @@ const Profile = () => {
                         <div
                           className="text-neutral-800 cursor-pointer"
                           onClick={() => {
-                            handleSectionVisibility("addressInformation");
+                            handleSectionVisibility(
+                              "addressInformation",
+                              false
+                            );
                             setTargetAddress(userAddress.id);
                           }}
                         >
@@ -185,7 +192,7 @@ const Profile = () => {
                   <button
                     className="py-2 px-3 self-center w-3/5 mt-3 text-center align-middle bg-neutral-700 text-base text-neutral-50 font-normal rounded hover:bg-neutral-800 hover:shadow-lg"
                     onClick={() =>
-                      handleSectionVisibility("addressInformation")
+                      handleSectionVisibility("addressInformation", false)
                     }
                   >
                     Add Address
