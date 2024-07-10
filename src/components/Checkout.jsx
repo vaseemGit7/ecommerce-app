@@ -88,9 +88,11 @@ const Checkout = () => {
         onClick={() => navigate(-1)}
       >
         <IonIcon icon={arrowBackOutline} className="text-lg" />
-        <p className="text-lg text-neutral-800 font-medium">Cart</p>
+        <p className="text-lg text-neutral-800 font-medium cursor-pointer">
+          Cart
+        </p>
       </div>
-      <div className="mx-28">
+      <div className="mx-28 min-h-screen">
         <div className="grid grid-cols-[3fr_2fr] ">
           <div className="flex flex-col p-6 gap-3">
             <div>

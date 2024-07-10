@@ -54,7 +54,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="mx-28">
+    <div className="mx-28 min-h-screen">
       <div className="grid grid-cols-[3fr_2fr] ">
         <div className="flex flex-col p-4 gap-3">
           <div>
