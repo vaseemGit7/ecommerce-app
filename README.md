@@ -3,6 +3,9 @@
 
  Stellario is a user-friendly eCommerce shopping application designed to provide a seamless online shopping experience. The app features a sleek and intuitive interface, enabling users to browse, search, and purchase a wide variety of products with ease.
 
+🔗 Demo video: [here](https://www.youtube.com/watch?v=U2qr3uIaXf4)
+
+**P.S.** Since the API has a limited number of calls, I cannot share the production deployment link publicly.
 
 ## Overview
 
